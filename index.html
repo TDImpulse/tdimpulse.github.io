@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ООО ТД Импульс — Промышленная химия оптом</title>
+    <!-- Подключаем Tailwind CSS для свободной и быстрой верстки -->
+    <script src="https://jsdelivr.net"></script>
+    <!-- Подключаем Alpine.js для умного управления списком товаров -->
+    <script defer src="https://jsdelivr.net"></script>
+</head>
+<body class="bg-gray-50 text-gray-900 font-sans" x-data="{ cookieAccepted: false }">
+
+    <!-- ГЛАВНЫЙ КОНТЕЙНЕР -->
+    <main class="max-w-6xl mx-auto px-4 py-12" 
+          x-data="{ 
+              search: '',
+              agreed: false,
+              /* НАЧАЛО ВИТРИНЫ: Сюда вы будете дописывать свои 40 товаров */
+              products: [
+                  { name: 'Натр едкий (Сода каустическая)', type: 'Щелочь', pack: 'МКР по 1000 кг', density: '2.13 г/см³', gost: 'ГОСТ 2263-79' },
+                  { name: 'Кислота ортофосфорная 85%', type: 'Кислота', pack: 'Кубы / Цистерны', density: '1.685 г/см³', gost: 'ГОСТ 10678-76' },
+                  { name: 'Кальций хлористый технический', type: 'Соль', pack: 'Мешки по 25 кг', density: '2.15 г/см³', gost: 'ГОСТ 450-77' }
+              ]
+          }">
+
+        <!-- ШАПКА САЙТА (ХЕДЕР) -->
+        <header class="mb-16 text-center">
+            <span class="text-sm font-bold tracking-widest text-blue-600 uppercase">Оптовые поставки от 20 тонн</span>
+            <h1 class="text-4xl md:text-5xl font-black text-blue-950 tracking-tight mt-2 uppercase">ООО ТД «ИМПУЛЬС»</h1>
+            <p class="text-gray-500 text-lg mt-3 max-w-xl mx-auto">Прямые поставки промышленной химии заводам и предприятиям по всей России.</p>
+            
+            <!-- ЖИВОЙ ПОИСК ПО ТОВАРАМ -->
+            <div class="mt-8 max-w-md mx-auto relative">
+                <input type="text" x-model="search" placeholder="Введите название или тип химии (например, Кислота)..." 
+                       class="w-full px-5 py-3 bg-white border border-gray-200 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition">
+            </div>
+        </header>
+
+        <!-- СЕТКА КАРТОЧЕК ТОВАРОВ -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <template x-for="product in products" :key="product.name">
+                <!-- КАРТОЧКА ТОBAРА (сама скрывается, если не подходит под поиск) -->
+                <div class="bg-white rounded-2xl p-6 shadow-xs border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between"
+                     x-show="product.name.toLowerCase().includes(search.toLowerCase()) || product.type.toLowerCase().includes(search.toLowerCase())">
+                    
+                    <div>
+                        <!-- Категория товара -->
+                        <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md" x-text="product.type"></span>
+                        
+                        <!-- Название -->
+                        <h2 class="text-xl font-bold mt-4 text-gray-800 leading-tight" x-text="product.name"></h2>
+                        
+                        <!-- Характеристики -->
+                        <div class="mt-5 space-y-2.5 text-sm text-gray-600 border-t border-gray-50 pt-4">
+                            <p class="flex justify-between"><span>📦 Фасовка:</span> <strong class="text-gray-800" x-text="product.pack"></strong></p>
+                            <p class="flex justify-between"><span>⚗️ Плотность:</span> <strong class="text-gray-800" x-text="product.density"></strong></p>
+                            <p class="flex justify-between"><span>📜 Стандарт:</span> <strong class="text-gray-800" x-text="product.gost"></strong></p>
+                        </div>
+                    </div>
+
+                    <!-- Форма заказа с галочкой согласия (152-ФЗ) -->
+                    <div class="mt-6 pt-4 border-t border-gray-50">
+                        <label class="flex items-start space-x-2 text-xs text-gray-500 mb-4 cursor-pointer select-none">
+                            <input type="checkbox" x-model="agreed" class="mt-0.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                            <span>Я согласен на обработку персональных данных.</span>
+                        </label>
+
+                        <!-- Кнопка: активна только при поставленной галочке -->
+                        <a :disabled="!agreed"
+                           :href="agreed ? 'https://wa.me! Интересует оптовая поставка от 20 тонн: ' + product.name : '#'" 
+                           :class="agreed ? 'bg-blue-600 hover:bg-blue-700 shadow-blue-100 shadow-lg cursor-pointer' : 'bg-gray-200 text-gray-400 cursor-not-allowed'"
+                           class="block w-full text-center text-white font-bold py-3 px-4 rounded-xl transition duration-200">
+                            Запросить паспорт качества
+                        </a>
+                    </div>
+
+                </div>
+            </template>
+        </div>
+
+    </main>
+
+    <!-- ВСПЛЫВАЮЩИЙ БАННЕР ПРО COOKIE (По закону РФ) -->
+    <div id="cookie-banner" class="fixed bottom-6 left-6 right-6 md:right-auto md:max-w-sm bg-gray-900 text-white p-5 rounded-2xl shadow-2xl z-50 flex flex-col space-y-3"
+         x-show="!cookieAccepted" x-init="cookieAccepted = localStorage.getItem('cookie_ok') === 'true'">
+        <p class="text-xs text-gray-300 leading-relaxed">Мы используем файлы cookie для анализа работы сайта. Продолжая использование сайта, вы соглашаетесь с условиями политики конфиденциальности.</p>
+        <button @click="localStorage.setItem('cookie_ok', 'true'); cookieAccepted = true" 
+                class="bg-blue-600 text-white text-xs font-bold py-2.5 px-4 rounded-xl hover:bg-blue-500 transition duration-150">
+            Принять и продолжить
+        </button>
+    </div>
+
+    <!-- МЕСТО ДЛЯ СКРИПТА ЧАТА CLEVERSITE -->
+    <!-- Когда зарегистрируетесь в CleverSite, замените этот блок на их реальный код -->
+    <script>
+        // Здесь будет код вашего чата с кобраузингом
+    </script>
+
+</body>
+</html>
