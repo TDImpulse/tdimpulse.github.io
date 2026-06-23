@@ -3,99 +3,297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ООО ТД Импульс — Промышленная химия оптом</title>
-    <!-- Подключаем Tailwind CSS для свободной и быстрой верстки -->
-    <script src="https://jsdelivr.net"></script>
-    <!-- Подключаем Alpine.js для умного управления списком товаров -->
-    <script defer src="https://jsdelivr.net"></script>
+    <title>WARP Р“РµРЅРµСЂР°С‚РѕСЂ</title>
+	<meta name="description" content="РЎР°Р№С‚ РґР»СЏ РіРµРЅРµСЂР°С†РёРё Р±РµСЃРїР»Р°С‚РЅРѕР№ РєРѕРЅС„РёРіСѓСЂР°С†РёРё Cloudflare WARP">
+    <link rel="icon" href="cloud.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+	<script defer src="quic.js"></script>
+    <script defer src="script.js"></script>
+	<script type="module" defer>
+  import { polyfillCountryFlagEmojis } from "https://cdn.skypack.dev/country-flag-emoji-polyfill";
+  polyfillCountryFlagEmojis();
+</script>
 </head>
-<body class="bg-gray-50 text-gray-900 font-sans" x-data="{ cookieAccepted: false }">
-
-    <!-- ГЛАВНЫЙ КОНТЕЙНЕР -->
-    <main class="max-w-6xl mx-auto px-4 py-12" 
-          x-data="{ 
-              search: '',
-              agreed: false,
-              /* НАЧАЛО ВИТРИНЫ: Сюда вы будете дописывать свои 40 товаров */
-              products: [
-                  { name: 'Натр едкий (Сода каустическая)', type: 'Щелочь', pack: 'МКР по 1000 кг', density: '2.13 г/см³', gost: 'ГОСТ 2263-79' },
-                  { name: 'Кислота ортофосфорная 85%', type: 'Кислота', pack: 'Кубы / Цистерны', density: '1.685 г/см³', gost: 'ГОСТ 10678-76' },
-                  { name: 'Кальций хлористый технический', type: 'Соль', pack: 'Мешки по 25 кг', density: '2.15 г/см³', gost: 'ГОСТ 450-77' }
-              ]
-          }">
-
-        <!-- ШАПКА САЙТА (ХЕДЕР) -->
-        <header class="mb-16 text-center">
-            <span class="text-sm font-bold tracking-widest text-blue-600 uppercase">Оптовые поставки от 20 тонн</span>
-            <h1 class="text-4xl md:text-5xl font-black text-blue-950 tracking-tight mt-2 uppercase">ООО ТД «ИМПУЛЬС»</h1>
-            <p class="text-gray-500 text-lg mt-3 max-w-xl mx-auto">Прямые поставки промышленной химии заводам и предприятиям по всей России.</p>
-            
-            <!-- ЖИВОЙ ПОИСК ПО ТОВАРАМ -->
-            <div class="mt-8 max-w-md mx-auto relative">
-                <input type="text" x-model="search" placeholder="Введите название или тип химии (например, Кислота)..." 
-                       class="w-full px-5 py-3 bg-white border border-gray-200 rounded-2xl shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-600 transition">
-            </div>
-        </header>
-
-        <!-- СЕТКА КАРТОЧЕК ТОВАРОВ -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <template x-for="product in products" :key="product.name">
-                <!-- КАРТОЧКА ТОBAРА (сама скрывается, если не подходит под поиск) -->
-                <div class="bg-white rounded-2xl p-6 shadow-xs border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition duration-300 flex flex-col justify-between"
-                     x-show="product.name.toLowerCase().includes(search.toLowerCase()) || product.type.toLowerCase().includes(search.toLowerCase())">
-                    
-                    <div>
-                        <!-- Категория товара -->
-                        <span class="text-xs font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2.5 py-1 rounded-md" x-text="product.type"></span>
-                        
-                        <!-- Название -->
-                        <h2 class="text-xl font-bold mt-4 text-gray-800 leading-tight" x-text="product.name"></h2>
-                        
-                        <!-- Характеристики -->
-                        <div class="mt-5 space-y-2.5 text-sm text-gray-600 border-t border-gray-50 pt-4">
-                            <p class="flex justify-between"><span>📦 Фасовка:</span> <strong class="text-gray-800" x-text="product.pack"></strong></p>
-                            <p class="flex justify-between"><span>⚗️ Плотность:</span> <strong class="text-gray-800" x-text="product.density"></strong></p>
-                            <p class="flex justify-between"><span>📜 Стандарт:</span> <strong class="text-gray-800" x-text="product.gost"></strong></p>
-                        </div>
-                    </div>
-
-                    <!-- Форма заказа с галочкой согласия (152-ФЗ) -->
-                    <div class="mt-6 pt-4 border-t border-gray-50">
-                        <label class="flex items-start space-x-2 text-xs text-gray-500 mb-4 cursor-pointer select-none">
-                            <input type="checkbox" x-model="agreed" class="mt-0.5 rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                            <span>Я согласен на обработку персональных данных.</span>
-                        </label>
-
-                        <!-- Кнопка: активна только при поставленной галочке -->
-                        <a :disabled="!agreed"
-                           :href="agreed ? 'https://wa.me! Интересует оптовая поставка от 20 тонн: ' + product.name : '#'" 
-                           :class="agreed ? 'bg-blue-600 hover:bg-blue-700 shadow-blue-100 shadow-lg cursor-pointer' : 'bg-gray-200 text-gray-400 cursor-not-allowed'"
-                           class="block w-full text-center text-white font-bold py-3 px-4 rounded-xl transition duration-200">
-                            Запросить паспорт качества
-                        </a>
-                    </div>
-
-                </div>
-            </template>
+<body>
+<div class="container">
+    
+ 
+    <img src="logo.svg" alt="Р›РѕРіРѕС‚РёРї" id="logo">
+   <div id="info">РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РЅРµ РѕС‚РєСЂС‹РІР°Р№С‚Рµ СЃР°Р№С‚ С‡РµСЂРµР· РІСЃС‚СЂРѕРµРЅРЅС‹Р№ Р±СЂР°СѓР·РµСЂ Telegram, РёРЅР°С‡Рµ Сѓ РІР°СЃ РЅРµ РїРѕР»СѓС‡РёС‚СЃСЏ СЃРєР°С‡Р°С‚СЊ С„Р°Р№Р»С‹.<br><br>Р§С‚РѕР±С‹ РѕС‚РєСЂС‹С‚СЊ СЃР°Р№С‚ РІ РѕР±С‹С‡РЅРѕРј Р±СЂР°СѓР·РµСЂРµ, РЅР°Р¶РјРёС‚Рµ <strong>РЅР° С‚СЂРё С‚РѕС‡РєРё РІ РїСЂР°РІРѕРј РІРµСЂС…РЅРµРј СѓРіР»Сѓ СЌРєСЂР°РЅР° Рё РІС‹Р±РµСЂРёС‚Рµ В«РћС‚РєСЂС‹С‚СЊ РІ Р±СЂР°СѓР·РµСЂРµВ».</strong>
+</div>
+<div id="status"></div>
+	<div class="grid-container">
+        <div id="awg" class="containerAWG">
+            <div class="header">
+                <img src="AWG.webp" alt="AmneziaWG Icon" class="amnezia-icon">
+				<span class="amnezia-text">AmneziaWG</span>
+				<button id="infoButton" class="info-button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:Rkl9ukq:" data-state="closed">
+					<svg class="settings-btn" settings-btn width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+						<circle cx="12" cy="12" r="3"></circle>
+					</svg>
+				</button>
+			</div>
+			<button id="generateButton1"><span class="button__text">AWG 2.0 (1 РІР°СЂРёР°РЅС‚)</a></span></button>
+			<button id="generateButton2"><span class="button__text">AWG 2.0 (2 РІР°СЂРёР°РЅС‚)</span></button>
+			<button id="generateButton3"><span class="button__text">AWG 2.0 (3 РІР°СЂРёР°РЅС‚)</span></button>
         </div>
-
-    </main>
-
-    <!-- ВСПЛЫВАЮЩИЙ БАННЕР ПРО COOKIE (По закону РФ) -->
-    <div id="cookie-banner" class="fixed bottom-6 left-6 right-6 md:right-auto md:max-w-sm bg-gray-900 text-white p-5 rounded-2xl shadow-2xl z-50 flex flex-col space-y-3"
-         x-show="!cookieAccepted" x-init="cookieAccepted = localStorage.getItem('cookie_ok') === 'true'">
-        <p class="text-xs text-gray-300 leading-relaxed">Мы используем файлы cookie для анализа работы сайта. Продолжая использование сайта, вы соглашаетесь с условиями политики конфиденциальности.</p>
-        <button @click="localStorage.setItem('cookie_ok', 'true'); cookieAccepted = true" 
-                class="bg-blue-600 text-white text-xs font-bold py-2.5 px-4 rounded-xl hover:bg-blue-500 transition duration-150">
-            Принять и продолжить
-        </button>
+		<div id="clash" class="containerClash" style="height: 160px;">
+            <div class="header">
+                <img src="Clash.webp" alt="AmneziaWG Icon" class="amnezia-icon">
+                <span class="amnezia-text">Clash</span>
+				<button id="infoButton3" class="info-button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:Rkl9ukq:" data-state="closed" style="left: 80px;">
+					<svg class="settings-btn" settings-btn width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+						<circle cx="12" cy="12" r="3"></circle>
+					</svg>
+				</button>				
+            </div>
+			<button id="generateButton4"><span class="button__text">AWG 2.0</span></button>
+			<button id="generateButton6"><span class="button__text">MASQUE</span></button>
+        </div>
+		<div id="wiresock" class="containerAWG" style="height: 100px">
+			<div class="header">
+				<img src="WireSock.webp" alt="AmneziaWG Icon" class="amnezia-icon">
+				<span class="wiresock-text">WireSock</span>
+				<button id="infoButton2" class="info-button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:Rkl9ukq:" data-state="closed">
+					<svg class="settings-btn" settings-btn width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"></path>
+						<circle cx="12" cy="12" r="3"></circle>
+					</svg>
+				</button>
+			</div>
+			<button id="generateButton5"><span class="button__text">AWG 2.0</span></button>
+		</div>		
     </div>
 
-    <!-- МЕСТО ДЛЯ СКРИПТА ЧАТА CLEVERSITE -->
-    <!-- Когда зарегистрируетесь в CleverSite, замените этот блок на их реальный код -->
-    <script>
-        // Здесь будет код вашего чата с кобраузингом
-    </script>
+    <button id="telegramButton"><span class="button__text">Telegram</span></button>
+	<button id="promoButton" class="glow-on-hover"><span class="button__text">Amnezia <a style="color: #A40059">Premium<a></span></button>
+    <button id="projectsButton"><span class="button__text">Р”СЂСѓРіРёРµ РїСЂРѕРµРєС‚С‹</span></button>
+		<div id="info1">РЎРґРµР»Р°РЅРѕ РЅР° РѕСЃРЅРѕРІРµ СЂРµСЃСѓСЂСЃРѕРІ 
+    <a href="https://warp2.llimonix.pw/" target="_blank" rel="noopener noreferrer">llimonix</a> 
+    Рё 
+    <a href="https://sageptr.github.io/mini_quic_generator/" target="_blank" rel="noopener noreferrer">sageptr</a>
+		</div>
+</div>
+
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="modal-line">DNS</div>
+        <div class="dnsinfo">
+  <label class="payment-option">
+    <div class="payment-option-content">1.1.1.1</div>
+    <input id="cf" type="radio" name="payment" class="payment-radio" checked />
+  </label>
+      <label class="payment-option">
+    <div class="payment-option-content">8.8.8.8</div>
+    <input id="google" type="radio" name="payment" class="payment-radio" />
+  </label>
+  <label class="payment-option">
+    <div class="payment-option-content">dns.malw.link</div>
+    <input id="malw" type="radio" name="payment" class="payment-radio" />
+  </label>
+  <label class="payment-option">
+    <div class="payment-option-content">xbox-dns.ru</div>
+    <input id="xbox" type="radio" name="payment" class="payment-radio" />
+  </label>
+    <label class="payment-option">
+    <div class="payment-option-content">dns.geohide.ru</div>
+    <input id="geohide" type="radio" name="payment" class="payment-radio" />
+  </label>
+    <label class="payment-option">
+    <div class="payment-option-content">dns.comss.one</div>
+    <input id="comss" type="radio" name="payment" class="payment-radio" />
+  </label>
+</div>		
+        
+		
+<div class="modal-line">Р Р°Р·РґРµР»СЊРЅРѕРµ С‚СѓРЅРЅРµР»РёСЂРѕРІР°РЅРёРµ    				<label class="toggle">
+					<input class="toggle-checkbox" type="checkbox" id="rules">
+					<div class="toggle-switch"></div>
+					<span class="toggle-label">РСЃРєР»СЋС‡РёС‚СЊ LAN</span>
+				</label></div>
+<div class="Sites">
+  <label class="payment-option">
+    <div class="payment-option-content">
+      YouTube
+    </div>
+    <input id="youtube" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+  <label class="payment-option">
+    <div class="payment-option-content">
+      Discord
+    </div>
+    <input id="discord" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+    <label class="payment-option">
+    <div class="payment-option-content">
+      WhatsApp
+    </div>
+    <input id="whatsapp" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+    <label class="payment-option">
+    <div class="payment-option-content">
+      Telegram
+    </div>
+    <input id="telegram" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+  <label class="payment-option">
+    <div class="payment-option-content">
+      Twitter
+    </div>
+    <input id="twitter" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+  <label class="payment-option">
+    <div class="payment-option-content">
+      Instagram
+    </div>
+    <input id="instagram" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+  <label class="payment-option">
+    <div class="payment-option-content">
+      Facebook
+    </div>
+    <input id="facebook" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+  <label class="payment-option">
+    <div class="payment-option-content">
+      Viber
+    </div>
+    <input id="viber" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+    <label class="payment-option">
+    <div class="payment-option-content">
+      Itch.io
+    </div>
+    <input id="itch" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+  <label class="payment-option">
+    <div class="payment-option-content">
+      RuTracker
+    </div>
+    <input id="rutracker" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+    <label class="payment-option">
+    <div class="payment-option-content">
+      Rutor
+    </div>
+    <input id="rutor" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+    <label class="payment-option">
+    <div class="payment-option-content">
+      NNMClub
+    </div>
+    <input id="nnmclub" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+  <label class="payment-option">
+    <div class="payment-option-content">
+      BestChange
+    </div>
+    <input id="bestchange" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+  <label class="payment-option">
+    <div class="payment-option-content">
+      AnimeGo
+    </div>
+    <input id="animego" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+  <label class="payment-option">
+    <div class="payment-option-content">
+      HDrezka
+    </div>
+    <input id="hdrezka" type="checkbox" name="sites" class="payment-radio"/>
+  </label>
+</div>
+	<div id="info2">IP-Р°РґСЂРµСЃР° РІР·СЏС‚С‹ СЃ <a id="link" href="https://iplist.opencck.org" target="_blank">iplist.opencck.org</a></div>
+   
+           <div class="modal-line">РЎРµСЂРІРµСЂ</div>
+        <div class="dnsinfo">
+  <label class="server-option">
+    <div class="server-option-content">РЎС‚Р°РЅРґР°СЂС‚РЅС‹Р№</div>
+    <input id="def" type="radio" name="server" class="server-radio" checked />
+  </label>
+  
+  <label class="server-option">
+    <div class="server-option-content">рџ‡«рџ‡® Р¤РёРЅР»СЏРЅРґРёСЏ</div>
+    <input id="FL" type="radio" name="server" class="server-radio" />
+  </label>
+    <label class="server-option">
+    <div class="server-option-content">рџ‡ірџ‡± РќРёРґРµСЂР»Р°РЅРґС‹</div>
+    <input id="NL" type="radio" name="server" class="server-radio" />
+  </label>	
+      <label class="server-option">
+    <div class="server-option-content">рџ‡µрџ‡± РџРѕР»СЊС€Р°</div>
+    <input id="PL" type="radio" name="server" class="server-radio" />
+  </label>
+  	  <label class="server-option">
+    <div class="server-option-content">рџ‡±рџ‡» Р›Р°С‚РІРёСЏ</div>
+    <input id="LV" type="radio" name="server" class="server-radio" />
+  </label>
+	  <label class="server-option">
+    <div class="server-option-content">рџ‡·рџ‡є Р РѕСЃСЃРёСЏ</div>
+    <input id="RU" type="radio" name="server" class="server-radio" />
+  </label>	
+  
+  <label class="server-option">
+    <div class="server-option-content">[LTE] рџ‡«рџ‡® Р¤РёРЅР»СЏРЅРґРёСЏ</div>
+    <input id="lteFL" type="radio" name="server" class="server-radio" />
+  </label>
+    <label class="server-option">
+    <div class="server-option-content">[LTE] рџ‡µрџ‡± РџРѕР»СЊС€Р°</div>
+    <input id="ltePL" type="radio" name="server" class="server-radio" />
+  </label>
+  
+</div>		
+   <div id="info2">РЎРµСЂРІРµСЂР° СЃ С„Р»Р°РіР°РјРё (РєСЂРѕРјРµ [LTE]) С‚СЂРµР±СѓСЋС‚ СЂРµРіРёСЃС‚СЂР°С†РёРё РІ <a id="link" href="https://t.me/warp_generator_bot?start=user_cabinet" target="_blank">Telegram Р±РѕС‚Рµ</a> РѕС‚ llimonix</div>
+	<div class="modal-line" style="justify-content: normal" id="optionsName"><span style="cursor: pointer;" id="optionsToggle">
+	Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё <svg id="optionsArrow" width="20" height="20" viewBox="0 0 16 17" style="margin-left: 5px; margin-bottom: -4px; transition: transform 0.3s ease;" fill="none"> <path d="M1.49691 5.4902L2.20391 4.7832L8.00041 10.5797L13.7969 4.7832L14.5039 5.4902L8.00041 11.994L1.49691 5.4902Z" fill="#FF6633"></path></svg></span></div>
+		<div class="options" id="optionsDiv">
+			<label class="toggle">
+				<input class="toggle-checkbox" type="checkbox" id="ipv6" checked>
+				<div class="toggle-switch"></div>
+				<span class="toggle-label ipv6">IPv6</span>
+			</label>
+			<label class="toggle" id="keepname">
+				<input class="toggle-checkbox" type="checkbox" id="keeptogggle">
+				<div class="toggle-switch"></div>
+				<span class="toggle-label">PersistentKeepalive <span class="keepalive-container">=&nbsp<textarea spellcheck="false" id="keepalive"  rows="1" maxlength="3" wrap="off" placeholder="25" style="width: 20px; text-align: center;"></textarea></span></span>
+			</label>	
+			<label class="toggle" style="text-align: inherit; text-wrap-style: auto">
+				<input class="toggle-checkbox" type="checkbox" id="i1toggle">
+				<div class="toggle-switch"></div>
+				<span class="toggle-label">РЎРѕР±СЃС‚РІРµРЅРЅС‹Р№ I1<textarea spellcheck="false" id="i1" class="i1" rows="1" placeholder="Р’РІРµРґРёС‚Рµ РґРѕРјРµРЅ"></textarea></span>
+			</label>
+			<textarea spellcheck="false" id="i2" class="i2" wrap="off" readonly></textarea>
+		</div>
+    </div>
+</div>
+
+<div id="infoModal2" class="modal">
+    <div class="modal-content">
+	<span class="close">&times;</span>
+	<div class="modal-line" style="margin-bottom: 10px;">РќР°СЃС‚СЂРѕР№РєРё</div>
+			<label class="toggle" style="padding-top: 0px; margin-bottom: 0px;">
+				<input class="toggle-checkbox" type="checkbox" id="servers">
+				<div class="toggle-switch"></div>
+				<span class="toggle-label">РРЅРѕСЃС‚СЂР°РЅРЅС‹Рµ СЃРµСЂРІРµСЂР°</span>
+			</label>
+	<div id="info2">РРЅРѕСЃС‚СЂР°РЅРЅС‹Рµ СЃРµСЂРІРµСЂР° С‚СЂРµР±СѓСЋС‚ СЂРµРіРёСЃС‚СЂР°С†РёРё РІ <a id="link" href="https://t.me/warp_generator_bot?start=user_cabinet" target="_blank">Telegram Р±РѕС‚Рµ</a> РѕС‚ llimonix</div>
+	<label class="toggle" style="padding-top: 0px; margin-bottom: 0px;">
+				<input class="toggle-checkbox" type="checkbox" id="masque">
+				<div class="toggle-switch"></div>
+				<span class="toggle-label">РЎРѕРІРјРµСЃС‚РёС‚СЊ MASQUE Рё AWG</span>
+			</label>
+    </div>
+</div>
+
+<div id="warning" class="modal">
+    <div class="modal-content" style="margin-top: 170px;">
+	<span class="close">&times;</span>
+	<div class="modal-line" style="margin-top: 0px; display: block; text-align: center; font-size: x-large;">РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ</div>
+	<div id="info2">РќРµСЃС‚Р°РЅРґР°СЂС‚РЅС‹Рµ СЃРµСЂРІРµСЂР° С‚СЂРµР±СѓСЋС‚ СЂРµРіРёСЃС‚СЂР°С†РёРё РІ <a id="link" href="https://t.me/warp_generator_bot?start=user_cabinet" target="_blank">Telegram Р±РѕС‚Рµ</a> РѕС‚ llimonix. <a style="font-weight: bold;">РќРµ Р·Р»РѕСѓРїРѕС‚СЂРµР±Р»СЏР№С‚Рµ</a> С‚СЂР°С„РёРєРѕРј С‡РµСЂРµР· РЅРёС…, РѕРЅРё РїСЂРµРґРЅР°Р·РЅР°С‡РµРЅС‹ РґР»СЏ РґРѕСЃС‚СѓРїР° Рє СЃРµСЂРІРёСЃР°Рј, РєРѕС‚РѕСЂС‹Рµ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅС‹ СЂРµРіРёРѕРЅР°Р»СЊРЅРѕ, Р° РЅРµ РґР»СЏ РїСЂРѕРєСЃРёСЂРѕРІР°РЅРёСЏ РІСЃРµРіРѕ РёРЅС‚РµСЂРЅРµС‚-С‚СЂР°С„РёРєР° Рё РїСЂРѕСЃРјРѕС‚СЂР° YouTube РёР»Рё СЃРєР°С‡РёРІР°РЅРёСЏ РёРіСЂ/С‚РѕСЂСЂРµРЅС‚РѕРІ. РџСЂРё С‡СЂРµР·РјРµСЂРЅРѕРј РїРѕС‚СЂРµР±Р»РµРЅРёРё РІР°С€ РґРѕСЃС‚СѓРї Рє РЅРёРј РјРѕР¶РµС‚ Р±С‹С‚СЊ Р·Р°Р±Р»РѕРєРёСЂРѕРІР°РЅ. Р”Р»СЏ YouTube Рё РїСЂРѕС‡РµРіРѕ РґРѕСЃС‚Р°С‚РѕС‡РЅРѕ СЃС‚Р°РЅРґР°СЂС‚РЅРѕРіРѕ СЃРµСЂРІРµСЂР°, РЅР° РєРѕС‚РѕСЂРѕРј РЅРµС‚ СЌС‚РёС… РѕРіСЂР°РЅРёС‡РµРЅРёР№</div>
+    </div>
+</div>
 
 </body>
-</html>
