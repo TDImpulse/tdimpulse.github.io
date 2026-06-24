@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Натр едкий ТР | Торговый дом Импульс</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bg-fixed-img {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('bg.webp');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.15;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen">
+
+    <div class="bg-fixed-img"></div>
+
+    <main class="container mx-auto p-6 md:p-12">
+	
+		<div class="mb-6">
+		<a href="catalog.html" class="inline-flex items-center gap-2 px-4 py-2 bg-black/30 backdrop-blur-md border border-white/10 rounded-full text-sm text-gray-300 hover:text-white hover:bg-black/50 transition-all duration-300">
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+			</svg>
+			Вернуться в каталог
+		</a>
+		</div>
+	
+	
+        <div class="bg-gradient-to-b from-white/10 to-black/30 backdrop-blur-md rounded-3xl border border-white/10 p-8 md:p-12 shadow-2xl">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                <div class="bg-white/5 rounded-2xl p-8 flex items-center justify-center border border-white/10">
+                    <img src="natr.png" alt="Натр едкий" class="w-full max-w-sm object-contain">
+                </div>
+
+                <div>
+                    <h1 class="text-4xl font-bold mb-8">Натр едкий технический чешуированный, марка ТР</h1>
+                    
+                    <div class="space-y-4 mb-8">
+					<div class="flex justify-between border-b border-white/10 pb-2">
+						<span class="text-gray-400">Вес мешка (кг)</span>
+						<span class="font-semibold text-white">25</span>
+					</div>
+					<div class="flex justify-between border-b border-white/10 pb-2">
+						<span class="text-gray-400">Внешний вид</span>
+						<span class="font-semibold text-white">Гранулы белого цвета</span>
+					</div>
+					<div class="flex justify-between border-b border-white/10 pb-2">
+						<span class="text-gray-400">Содержание Na2Co3 (чистота)</span>
+						<span class="font-semibold text-white">98,80 %</span>
+					</div>
+					<div class="flex justify-between border-b border-white/10 pb-2">
+						<span class="text-gray-400">Состав</span>
+						<span class="font-semibold text-white">Гидрокарбонат натрия</span>
+					</div>
+					<div class="flex justify-between border-b border-white/10 pb-2">
+						<span class="text-gray-400">Срок хранения</span>
+						<span class="font-semibold text-white">1 год</span>
+					</div>
+					<div class="flex justify-between border-b border-white/10 pb-2">
+						<span class="text-gray-400">Страна производитель</span>
+						<span class="font-semibold text-white">Россия</span>
+					</div>
+					<div class="flex justify-between border-b border-white/10 pb-2">
+						<span class="text-gray-400">Упаковка</span>
+						<span class="font-semibold text-white">Полипропиленовый мешок</span>
+					</div>
+				</div>
+
+                    <div class="flex flex-wrap gap-4 mt-8">
+						<button onclick="handleCall()" 
+								class="inline-flex items-center gap-2 bg-gray-950 hover:bg-black px-6 py-3 rounded-full font-bold border border-gray-700 transition">
+							📞 Позвонить
+						</button>
+
+						<script>
+						function handleCall() {
+							// Проверяем, мобильное ли это устройство
+							const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+							const phoneNumber = "+79375006695"; // Ваш номер
+
+							if (isMobile) {
+								// На телефоне просто открываем звонок
+								window.location.href = "tel:" + phoneNumber;
+							} else {
+								// На Windows/ПК меняем текст кнопки на сам номер
+								const btn = document.getElementById('buttonText');
+								btn.innerText = phoneNumber;
+								
+								// Можно добавить копирование в буфер обмена
+								navigator.clipboard.writeText(phoneNumber);
+								alert("Номер скопирован в буфер обмена: " + phoneNumber);
+							}
+						}
+						</script>
+						<a href="https://wa.me/+212694170179" class="bg-gray-950 hover:bg-black px-6 py-3 rounded-full font-bold border border-gray-700 transition">WhatsApp</a>
+                        <a href="https://t.me/+2349081657155" class="bg-gray-950 hover:bg-black px-6 py-3 rounded-full font-bold border border-gray-700 transition">Telegram</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- Описание и паспорт -->
+		<div class="mt-8 bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-10">
+			<div class="mt-8 bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-10">
+    
+    <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+        🛠️ Основные характеристики
+    </h3>
+    <ul class="text-gray-300 leading-relaxed mb-8 space-y-2">
+        <li><strong class="text-white">Химическая формула:</strong> NaOH</li>
+        <li><strong class="text-white">Внешний вид:</strong> Чешуированная масса белого цвета (допускается легкий окрас).</li>
+        <li><strong class="text-white">Массовая доля основного вещества (NaOH):</strong> не менее 98.5% (соответствует высшему сорту).</li>
+        <li><strong class="text-white">Растворимость:</strong> Отличная растворимость в воде, спиртах.</li>
+        <li><strong class="text-white">Гигроскопичность:</strong> Очень высокая (быстро поглощает влагу и углекислый газ из воздуха).</li>
+    </ul>
+
+    <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+        🏭 Сферы применения
+    </h3>
+    <ul class="text-gray-300 leading-relaxed mb-8 space-y-2">
+        <li><strong class="text-white">Промышленность:</strong> Производство мыла, шампуней, моющих средств, бумаги, картона и искусственных волокон.</li>
+        <li><strong class="text-white">Нефтехимия:</strong> Очистка нефтепродуктов, масел и участие в технологических процессах бурения.</li>
+        <li><strong class="text-white">Бытовое и коммунальное хозяйство:</strong> Эффективное устранение сложных засоров в трубах, растворение жировых и органических отложений.</li>
+        <li><strong class="text-white">Металлургия и автомобилестроение:</strong> Обезжиривание оборудования, деталей и подготовка поверхностей к травлению.</li>
+    </ul>
+
+    <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+        ⚠️ Безопасность и хранение
+    </h3>
+    <p class="text-gray-300 leading-relaxed mb-2">
+        <strong class="text-white">Класс опасности:</strong> 2 класс (высокоопасное вещество). Едкое вещество, вызывает серьезные химические ожоги при попадании на кожу и слизистые.
+    </p>
+    <p class="text-gray-300 leading-relaxed mb-2">
+        <strong class="text-white">Меры предосторожности:</strong> Работать строго в защитных очках, резиновых перчатках, спецодежде и респираторе.
+    </p>
+    <p class="text-gray-300 leading-relaxed">
+        <strong class="text-white">Хранение:</strong> В плотно закрытой оригинальной упаковке, в сухих складских помещениях, защищенных от влаги. Срок годности в герметичной таре — 1 год с даты изготовления.
+    </p>
+
+</div>
+
+			<h3 class="text-xl font-bold mb-6">Паспорт качества продукции</h3>
+			
+			<!-- Паспорт на всю ширину -->
+			<div class="bg-white/95 p-2 rounded-xl border-4 border-white shadow-lg w-full">
+				<img src="pasport_natr.jpg" alt="Паспорт качества" class="w-full h-auto rounded-lg">
+			</div>
+		</div>
+
+    </main>
+
+	
+	
+<div id="callModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm hidden">
+    <div class="bg-gray-900 p-8 rounded-3xl border border-white/20 text-center shadow-2xl max-w-sm w-full">
+        <h3 class="text-gray-400 text-sm mb-2 uppercase tracking-widest">Наш телефон</h3>
+        <div id="modalPhoneNumber" class="text-3xl font-bold text-white mb-6"></div>
+        <p class="text-green-400 text-sm mb-6">Номер скопирован в буфер обмена</p>
+        <button onclick="closeModal()" class="w-full py-3 bg-blue-900 rounded-full font-bold hover:bg-blue-800 transition">Закрыть</button>
+    </div>
+</div>
+
+<script>
+function handleCall() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const phoneNumber = "+79375006695";
+
+    if (isMobile) {
+        window.location.href = "tel:" + phoneNumber;
+    } else {
+        // Показываем модальное окно
+        document.getElementById('modalPhoneNumber').innerText = phoneNumber;
+        document.getElementById('callModal').classList.remove('hidden');
+        navigator.clipboard.writeText(phoneNumber);
+    }
+}
+
+function closeModal() {
+    document.getElementById('callModal').classList.add('hidden');
+}
+</script>	
+	
+	
+</body>
+</html>

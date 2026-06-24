@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>О компании | Торговый дом Импульс</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bg-fixed-img {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('bg.webp');
+            background-size: cover; background-position: center;
+            opacity: 0.15; z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-gray-950 text-gray-100 min-h-screen">
+    <div class="bg-fixed-img"></div>
+
+    <main class="container mx-auto p-6 md:p-12 max-w-4xl">
+        
+        <div class="mb-8">
+            <a href="index.html" class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition">
+                <span>&larr;</span> Вернуться на главную
+            </a>
+        </div>
+
+        <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-8 mb-8">
+            <h1 class="text-4xl font-bold mb-6">О компании «Торговый Дом Импульс»</h1>
+            <p class="text-lg text-gray-300 leading-relaxed">
+            Мы — прямые дилеры АО «Росхим». Поставляем промышленную химию крупным оптом, обеспечиваем прямые отгрузки с завода производителя или с нашего склада.
+
+Наш опыт и прямые контракты позволяют нам гарантировать качество продукции, соблюдение сроков и оптимальные рыночные цены для наших партнеров.
+			</p>
+        </div>
+
+        <div class="bg-black/40 backdrop-blur-md border border-white/10 rounded-3xl p-8 mb-12">
+            <h2 class="text-2xl font-bold mb-6">Карта партнёра</h2>
+            <div class="grid md:grid-cols-2 gap-6 text-sm">
+                <div>
+                    <p class="text-gray-400">Полное наименование</p>
+                    <p class="font-semibold mb-3">ООО «Торговый Дом Импульс» </p>
+                    
+                    <p class="text-gray-400">Юридический адрес</p>
+                    <p class="font-semibold mb-3">г. Стерлитамак, ул. Б. Хмельницкого, д. 4, оф. 4 </p>
+                </div>
+                <div>
+                    <p class="text-gray-400">Контакты</p>
+                    <p class="font-semibold mb-3">8(3473)426704, +7 987 6010162 </p>
+                    
+                    <p class="text-gray-400">E-mail</p>
+                    <p class="font-semibold mb-3">td_impuls@inbox.ru </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center pb-12">
+            <a href="catalog.html" class="px-10 py-4 bg-blue-900 hover:bg-blue-800 text-white font-bold rounded-full transition-all border border-blue-700 shadow-xl">
+                Перейти в каталог продукции
+            </a>
+        </div>
+
+    </main>
+</body>
+</html>
