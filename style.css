@@ -19,7 +19,7 @@ a {
     color: inherit;
 }
 
-/* Фиксированный фон завода со старой страницы */
+/* Фиксированный фон завода */
 .bg-fixed-img {
     position: fixed;
     top: 0;
@@ -33,7 +33,7 @@ a {
     z-index: -1;
 }
 
-/* ===== ЕДИНАЯ ШАПКА ДО САМОГО ВЕРХА ===== */
+/* ===== ЕДИНАЯ ШАПКА ===== */
 .header-block {
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(12px);
@@ -41,6 +41,8 @@ a {
     border-bottom: 1px solid rgba(255, 255, 255, 0.6);
     padding: 20px 0;
     width: 100%;
+    position: relative;
+    z-index: 1000; /* Шапка всегда поверх карточек товаров */
 }
 
 .header-inner {
@@ -67,18 +69,159 @@ a {
     justify-content: flex-end;
 }
 
-.contacts {
+/* ===== ИКОНКА И ТЁМНОЕ СТЕКЛЯННОЕ ОКНО КОНТАКТОВ ===== */
+.contacts-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.contacts-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.contact-item {
-    color: #9ca3af;
+.contacts-btn:hover {
+    transform: scale(1.4);
+    opacity: 0.9;
+}
+
+.contacts-icon {
+    width: 76px;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+/* Окно контактов */
+.contacts-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    
+    /* 1. ДОБАВЛЯЕМ НЕВИДИМЫЙ "МОСТ" МЕЖДУ ИКОНКОЙ И МЕНЮ */
+    /* Псевдоэлемент ::before создаст прозрачную область, чтобы мышь не вылетала */
+    
+    background: rgba(15, 23, 75, 0.94) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(59, 130, 246, 0.4) !important;
+    border-radius: 16px;
+    padding: 20px;
+    
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 
+                0 0 20px rgba(30, 58, 138, 0.5);
+    z-index: 99999;
+}
+
+/* 2. ДОБАВЬ ЭТОТ НОВЫЙ БЛОК КОДА СРАЗУ ПОСЛЕ .contacts-menu: */
+/* Он перекрывает зазор между иконкой и выпадающим окном */
+.contacts-menu::before {
+    content: '';
+    position: absolute;
+    top: -15px; /* Перекрывает щель сверху над меню */
+    left: 0;
+    width: 100%;
+    height: 15px; /* Высота невидимого мостика */
+    background: transparent;
+}
+
+
+.contacts-menu-content {
+    background: transparent;
+    padding: 0;
+}
+
+/* Блоки контактов */
+.contact-group {
+    margin-bottom: 12px;
+}
+
+.contact-group:last-child {
+    margin-bottom: 0;
+}
+
+/* Номера телефонов */
+.contact-number {
+    display: block;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    line-height: 1.2;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    user-select: none;
+}
+
+.contact-number:hover {
+    color: #60a5fa;
+}
+
+/* Подписи к номерам */
+.contact-label {
+    display: block;
     font-size: 14px;
-    white-space: nowrap;
+    color: #dcf0ff;
+    margin-top: 2px;
 }
 
+/* Плашки-теги (E-mail, Адрес) */
+.contact-tag {
+    display: inline-block;
+    background-color: #1e3a8a;
+    border: 1px solid #1d4ed8;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-bottom: 4px;
+}
+
+/* Текст адреса и почты */
+.contact-text {
+    display: block;
+    font-size: 24px;
+    color: #e2e8f0;
+    line-height: 1.4;
+    text-decoration: none;
+    margin: 0;
+}
+
+/* Отдельный шрифт и размер для адреса */
+p.contact-text {
+    font-size: 13px; /* Размер текста адреса */
+    font-family: 'Segoe UI', sans-serif; /* Название шрифта (можно указать любой, например: Arial, Roboto) */
+    font-weight: 400; /* Плотность: 400 (обычный), 600 (полужирный), 700 (жирный) */
+    line-height: 1.3; /* Межстрочный интервал */
+}
+
+a.contact-text:hover {
+    color: #60a5fa;
+}
+
+/* Разделитель */
+.menu-divider {
+    height: 1px;
+    background-color: rgba(255, 255, 255, 0.15);
+    margin: 12px 0;
+}
+
+
+/* Теперь меню показывается только когда у контейнера есть класс .active */
+/* Меню покажется только при наличии класса .is-open */
+.contacts-dropdown.is-open .contacts-menu {
+    display: block;
+}
+
+/* Кнопка О компании */
 .btn-about {
     background: rgba(255, 255, 255, 0.08);
     color: #fff;
@@ -120,6 +263,7 @@ a {
 .hero-section {
     padding: 20px 0 24px;
     position: relative;
+    z-index: 1;
 }
 
 .hero-inner {
@@ -138,7 +282,6 @@ a {
     margin-bottom: 24px;
 }
 
-/* Стеклянные карточки с двойным встроенным градиентом */
 .product-card {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.75) 100%);
     backdrop-filter: blur(4px);
@@ -201,9 +344,9 @@ a {
     display: inline-block;
     background-color: #1e3a8a;
     color: #fff;
-    padding: 16px 48px;
+    padding: 10px 40px;
     border-radius: 9999px;
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     border: 1px solid #1d4ed8;
     transition: all 0.2s;
@@ -233,6 +376,79 @@ a {
     font-size: 14px;
 }
 
+/* ===== СТИЛИ МОДАЛЬНОГО ОКНА ДЛЯ ПК И МОБИЛЬНЫХ ===== */
+.contacts-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999999 !important;
+}
+
+.contacts-modal-backdrop.hidden {
+    display: none !important;
+}
+
+.contacts-modal-box {
+    background-color: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    padding: 32px;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    max-width: 380px;
+    width: 90%;
+}
+
+.contacts-modal-title {
+    color: #9ca3af;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.contacts-modal-number {
+    font-size: 28px;
+    font-weight: 800;
+    color: #ffffff;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+}
+
+/* Изменяет размер шрифта только внутри модального окна почты */
+#contactsEmailModal .contacts-modal-number {
+    font-size: 20px;       /* Задай нужный размер для почты (например, 16px или 18px) */
+    word-break: break-all; /* Авто-перенос, чтобы длинный e-mail влезал */
+}
+
+.contacts-modal-success {
+    color: #4ade80;
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.contacts-modal-btn {
+    width: 100%;
+    padding: 12px 0;
+    background-color: #1e3a8a;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 700;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.contacts-modal-btn:hover {
+    background-color: #1d4ed8;
+}
+
 /* ===== АДАПТИВНОСТЬ ===== */
 @media (max-width: 1200px) {
     .hero-inner {
@@ -254,7 +470,7 @@ a {
 }
 
 @media (max-width: 768px) {
-    /* ===== ШАПКА ===== */
+    /* ШАПКА */
     .header-block {
         padding: 12px 0 16px;
     }
@@ -268,35 +484,45 @@ a {
         padding: 0 16px;
     }
 
-    /* 1. Контакты слева */
     .header-left {
         order: 1;
         justify-content: flex-start;
-        z-index: 2;
+        z-index: 100;
     }
 
-    .contacts {
-        align-items: flex-start;
-        gap: 2px;
+    .contacts-icon {
+        width: 60px;
     }
 
-    .contact-item {
-        font-size: 11px;
+    .contacts-menu {
+        left: 0;
+        padding-top: 6px;
+        width: 330px;
+    }
+	
+		/* Подписи к номерам */
+	.contact-label {
+		display: block;
+		font-size: 18px;
+		color: #dcf0ff;
+		margin-top: 2px;
+	}
+
+    .contact-number {
+        font-size: 24px;
     }
 
-    /* 2. Кнопка справа */
     .header-right {
         order: 2;
         justify-content: flex-end;
-        z-index: 2;
+        z-index: 100;
     }
 
     .btn-about {
         padding: 5px 12px;
-        font-size: 12px;
+        font-size: 14px;
     }
 
-    /* 3. Логотип вклинивается наверх по центру */
     .header-center {
         order: 3;
         width: 100%;
@@ -315,14 +541,12 @@ a {
         line-height: 1.3;
     }
 
-    /* ===== ПЕРЕСТАНОВКА: КНОПКА НАВЕРХ, КАРТОЧКИ СНИЗУ ===== */
     .hero-inner {
         display: flex !important;
         flex-direction: column !important;
         padding: 0 12px;
     }
 
-    /* Кнопка каталога прыгает НАВЕРХ */
     .catalog-btn-wrapper {
         order: 1 !important;
         text-align: center;
@@ -331,20 +555,18 @@ a {
     }
 
     .btn-catalog {
-        font-size: 18px;
-        padding: 4px 32px;
+        font-size: 16px;
+        padding: 8px 28px;
     }
 
-    /* Сетка товаров встаёт СНИЗУ */
     .products-grid {
         order: 2 !important;
         display: grid !important;
-        grid-template-columns: repeat(2, 1fr) !important; /* Ровно 2 колонки */
+        grid-template-columns: repeat(2, 1fr) !important;
         gap: 12px !important;
         margin-bottom: 20px;
     }
 
-    /* Настройки размера карточки */
     .product-card {
         border-radius: 12px;
     }

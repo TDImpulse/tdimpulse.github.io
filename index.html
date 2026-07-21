@@ -13,13 +13,43 @@
     <!-- Единая шапка от самого верха -->
     <header class="header-block">
         <div class="header-inner">
-            <!-- Левая колонка: контакты -->
-            <div class="header-left">
-                <div class="contacts">
-                    <span class="contact-item">тел: +7 (937) 500-66-95</span>
-                    <span class="contact-item">impulse.chem@gmail.com</span>
-                </div>
-            </div>
+           <!-- Левая колонка: иконка контактов с выпадающим окном -->
+			<div class="header-left">
+				<div class="contacts-dropdown">
+					<button class="contacts-btn" onclick="toggleContactsMenu(event)" aria-label="Контакты">
+						<img src="Contacts.png" alt="Контакты" class="contacts-icon">
+					</button>
+				<div class="contacts-menu">
+					<!-- Отдел продаж -->
+					<div class="contact-group">
+						<span class="contact-label">Отдел продаж:</span>
+						<span class="contact-number" onclick="handlePhoneClick('+79375006695')">+7 937 500-66-95</span>
+						
+					</div>
+
+					<!-- Коммерческий директор -->
+					<div class="contact-group">
+						<span class="contact-label">Коммерческий директор:</span>
+						<span class="contact-number" onclick="handlePhoneClick('+79378559501')">+7 937 855-95-01</span>
+						
+					</div>
+
+					<div class="menu-divider"></div>
+
+					<!-- Электронная почта -->
+					<div class="contact-group">
+						<span class="contact-tag">E-mail</span>
+					<span class="contact-text" onclick="handleEmailClick('impulse.chem@gmail.com')">impulse.chem@gmail.com</span>
+					</div>
+
+					<!-- Почтовый адрес -->
+					<div class="contact-group">
+						<span class="contact-tag">Адрес</span>
+						<p class="contact-text">453126, Россия, Респ. Башкортостан, <br>г. Стерлитамак, ул. Б. Хмельницкого д.4, оф.4</p>
+					</div>
+				</div>
+				</div>
+			</div>
 
             <!-- Центральная колонка: логотип и подзаголовок -->
             <div class="header-center">
@@ -87,5 +117,158 @@
             <p>© 2026 ООО «Торговый дом Импульс».</p>
         </div>
     </footer>
+
+<!-- МОДАЛЬНОЕ ОКНО ДЛЯ КОНТАКТОВ -->
+<div id="contactsCallModal" class="contacts-modal-backdrop hidden">
+    <div class="contacts-modal-box">
+        <h3 class="contacts-modal-title">НАШ ТЕЛЕФОН</h3>
+        <div id="modalPhoneValue" class="contacts-modal-number"></div>
+        <p class="contacts-modal-success">Номер скопирован в буфер обмена</p>
+        <button onclick="closeContactsModal()" class="contacts-modal-btn">Закрыть</button>
+    </div>
+</div>
+
+<!-- Модальное окно для E-mail -->
+<div id="contactsEmailModal" class="contacts-modal-backdrop hidden">
+    <div class="contacts-modal-box">
+        <h3 class="contacts-modal-title">НАША ЭЛЕКТРОННАЯ ПОЧТА</h3>
+        <div id="modalEmailValue" class="contacts-modal-number"></div>
+        <p class="contacts-modal-success">E-mail скопирован в буфер обмена</p>
+        <button onclick="closeContactsEmailModal()" class="contacts-modal-btn">Закрыть</button>
+    </div>
+</div>
+
+<script>
+// ===== 1. ЛОГИКА ВЫПАДАЮЩЕГО МЕНЮ КОНТАКТОВ =====
+const dropdown = document.querySelector('.contacts-dropdown');
+const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+// Запоминаем время открытия в миллисекундах
+let openTimestamp = 0; 
+
+if (!isMobileDevice && dropdown) {
+    // При наведении на ПК открываем меню
+    dropdown.addEventListener('mouseenter', function() {
+        if (!this.classList.contains('closed-by-click')) {
+            // Если меню ещё не было открыто — открываем и фиксируем время
+            if (!this.classList.contains('is-open')) {
+                this.classList.add('is-open');
+                openTimestamp = Date.now();
+            }
+        }
+    });
+
+    // При уходе мыши с блока — сбрасываем состояние
+    dropdown.addEventListener('mouseleave', function() {
+        this.classList.remove('is-open');
+        this.classList.remove('closed-by-click');
+        openTimestamp = 0;
+    });
+}
+
+// Клик / Тап по иконке контактов
+function toggleContactsMenu(event) {
+    event.stopPropagation();
+    
+    if (!dropdown) return;
+
+    // Логика для ПК
+    if (!isMobileDevice) {
+        if (dropdown.classList.contains('is-open')) {
+            const timePassed = Date.now() - openTimestamp;
+            
+            // Если с момента открытия прошло МЕНЬШЕ 1000 мс (1 секунды) — 
+            // игнорируем клик (защита от случайного закрытия при наведении)
+            if (timePassed < 1000) {
+                return;
+            }
+
+            // Если прошло 1 секунда и больше — закрываем меню по клику
+            dropdown.classList.remove('is-open');
+            dropdown.classList.add('closed-by-click');
+            openTimestamp = 0;
+        } else {
+            // Если было закрыто — открываем по клику
+            dropdown.classList.add('is-open');
+            dropdown.classList.remove('closed-by-click');
+            openTimestamp = Date.now();
+        }
+    } 
+    // Логика для смартфонов (простое открытие/закрытие по тапу)
+    else {
+        if (dropdown.classList.contains('is-open')) {
+            dropdown.classList.remove('is-open');
+        } else {
+            dropdown.classList.add('is-open');
+        }
+    }
+}
+
+// Закрытие меню при клике в случайную точку экрана
+document.addEventListener('click', function(event) {
+    if (dropdown && !dropdown.contains(event.target)) {
+        dropdown.classList.remove('is-open');
+        dropdown.classList.remove('closed-by-click');
+        openTimestamp = 0;
+    }
+});
+
+
+// ===== 2. ЛОГИКА КЛИКА ПО НОМЕРАМ ТЕЛЕФОНОВ =====
+function handlePhoneClick(phoneNumber) {
+    if (isMobileDevice) {
+        // На смартфоне открываем звонок
+        window.location.href = "tel:" + phoneNumber;
+    } else {
+        // На ПК показываем модальное окно и копируем номер
+        const modal = document.getElementById('contactsCallModal');
+        const phoneVal = document.getElementById('modalPhoneValue');
+
+        if (modal && phoneVal) {
+            phoneVal.innerText = phoneNumber;
+            modal.classList.remove('hidden');
+        }
+
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(phoneNumber);
+        }
+    }
+}
+
+function closeContactsModal() {
+    const modal = document.getElementById('contactsCallModal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+}
+// ===== ЛОГИКА ДЛЯ ПОЧТЫ (E-MAIL) =====
+function handleEmailClick(emailAddress) {
+    if (isMobileDevice) {
+        // На смартфоне открываем почтовый клиент
+        window.location.href = "mailto:" + emailAddress;
+    } else {
+        // На ПК показываем окно почты и копируем в буфер
+        const modal = document.getElementById('contactsEmailModal');
+        const emailVal = document.getElementById('modalEmailValue');
+
+        if (modal && emailVal) {
+            emailVal.innerText = emailAddress;
+            modal.classList.remove('hidden');
+        }
+
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(emailAddress);
+        }
+    }
+}
+
+function closeContactsEmailModal() {
+    const modal = document.getElementById('contactsEmailModal');
+    if (modal) {
+        modal.classList.add('hidden');
+    }
+}
+
+</script>
 </body>
 </html>
