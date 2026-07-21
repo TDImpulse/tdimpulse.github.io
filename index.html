@@ -10,24 +10,31 @@
     <!-- Фоновая картинка с фиксированным позиционированием и прозрачностью -->
     <div class="bg-fixed-img"></div>
 
-    <!-- Верхняя панель с контактами -->
-    <div class="top-bar">
-        <div class="top-bar-inner">
-            <div class="contacts">
-                <span class="contact-item">тел: +7 (937) 500-66-95</span>
-                <span class="contact-item">impulse.chem@gmail.com</span>
+    <!-- Единая шапка от самого верха -->
+    <header class="header-block">
+        <div class="header-inner">
+            <!-- Левая колонка: контакты -->
+            <div class="header-left">
+                <div class="contacts">
+                    <span class="contact-item">тел: +7 (937) 500-66-95</span>
+                    <span class="contact-item">impulse.chem@gmail.com</span>
+                </div>
             </div>
-            <a href="about.html" class="btn-about">О компании</a>
-        </div>
-    </div>
 
-    <!-- Блок заголовка с обводкой и размытием -->
-    <div class="title-block">
-        <div class="title-block-inner">
-            <h1 class="main-title">Торговый дом Импульс</h1>
-            <p class="subtitle">Прямые дилеры АО «Росхим» | Крупный опт от 20 тонн</p>
+            <!-- Центральная колонка: логотип и подзаголовок -->
+            <div class="header-center">
+                <h1 class="main-title">
+                    <img src="logo.png" alt="Торговый дом Импульс" class="main-logo">
+                </h1>
+                <p class="subtitle">Прямые дилеры АО «Росхим» | Крупный опт от 20 тонн</p>
+            </div>
+
+            <!-- Правая колонка: кнопка о компании -->
+            <div class="header-right">
+                <a href="about.html" class="btn-about">О компании</a>
+            </div>
         </div>
-    </div>
+    </header>
 
     <!-- Основной контент с карточками -->
     <div class="hero-section">
@@ -35,13 +42,12 @@
             <div class="products-grid">
                 
                 <!-- Карточка 1: Натр едкий -->
-             <!-- Карточка 1: Натр едкий -->
-				<a href="natrCHTR.html" class="product-card first-product">
-					<div class="product-image-box">
-						<img src="natr.png" alt="Натр едкий чешуированный" class="product-img">
-					</div>
-					<h3 class="product-title">Натр едкий чешуированный</h3>
-				</a>
+                <a href="natrCHTR.html" class="product-card first-product">
+                    <div class="product-image-box">
+                        <img src="natr.png" alt="Натр едкий чешуированный" class="product-img">
+                    </div>
+                    <h3 class="product-title">Натр едкий чешуированный</h3>
+                </a>
                 
                 <!-- Карточка 2: Кислота соляная -->
                 <a href="natriy_gidro.html" class="product-card">
