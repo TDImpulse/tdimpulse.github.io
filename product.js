@@ -1,4 +1,4 @@
-// 1. Данные для защищенной подстановки[cite: 10]
+// 1. Данные для защищенной подстановки
 const contactData = {
     phone: "+79695312329",
     whatsapp: "https://wa.me/+212694170179",
@@ -7,56 +7,9 @@ const contactData = {
     email: "impulse.chem@gmail.com"
 };
 
-// 2. Автоматическая подгрузка модалок, подстановка данных и инициализация скролла[cite: 10]
+// 2. Автоматическая подстановка защищенных данных и инициализация скролла
 document.addEventListener("DOMContentLoaded", function() {
-    // Подгружаем общие модальные окна и плавающую кнопку из modals.html
-    fetch('modals.html')
-        .then(response => {
-            if (!response.ok) throw new Error('Ошибка загрузки modals.html');
-            return response.text();
-        })
-        .then(html => {
-            document.body.insertAdjacentHTML('beforeend', html);
-            
-            // Инициализируем ссылки и текст после того, как элементы появились в DOM
-            initContactLinks();
-        })
-        .catch(error => console.error('Не удалось загрузить общие элементы:', error));
-
-    // Логика появления и исчезновения плавающей кнопки при прокрутке[cite: 10]
-    let timer = null;
-    const mainButton = document.querySelector('button[onclick*="handleCall"]') || document.querySelector('button');
-    const floatingBtn = document.getElementById('floatingConsultant');
-
-    if (floatingBtn) {
-        window.addEventListener('scroll', () => {
-            if (!mainButton) return;
-            const rect = mainButton.getBoundingClientRect();
-            
-            // Если верхняя кнопка ушла выше верхней границы экрана[cite: 10]
-            const isScrolledPast = rect.bottom < 0;
-
-            if (isScrolledPast) {
-                if (!timer && floatingBtn.classList.contains('opacity-0')) {
-                    timer = setTimeout(() => {
-                        floatingBtn.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
-                        floatingBtn.classList.add('translate-y-0', 'opacity-100');
-                    }, 4000); 
-                }
-            } else {
-                // Возврат к кнопке заказа — мгновенно прячем плавающую кнопку[cite: 10]
-                clearTimeout(timer);
-                timer = null;
-                floatingBtn.classList.remove('translate-y-0', 'opacity-100');
-                floatingBtn.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
-            }
-        });
-    }
-});
-
-// Функция заполнения контактных данных в динамически подгруженных модалках
-function initContactLinks() {
-    // ПК версия модалки[cite: 10]
+    // ПК версия модалки
     const phoneEl = document.getElementById('modalPhoneNumber');
     if (phoneEl) phoneEl.textContent = contactData.phone;
 
@@ -72,7 +25,7 @@ function initContactLinks() {
     const emailEl = document.getElementById('emailLink');
     if (emailEl) emailEl.href = "mailto:" + contactData.email;
 
-    // Мобильная версия модалки[cite: 10]
+    // Мобильная версия модалки
     const mPhoneEl = document.getElementById('mobileModalPhone');
     if (mPhoneEl) {
         mPhoneEl.textContent = contactData.phone;
@@ -90,9 +43,39 @@ function initContactLinks() {
 
     const mEmailEl = document.getElementById('mEmailLink');
     if (mEmailEl) mEmailEl.href = "mailto:" + contactData.email;
-}
 
-// 3. Управление модальным окном (разделение ПК / Телефон)[cite: 10]
+    // Логика появления и исчезновения плавающей кнопки при прокрутке
+    let timer = null;
+    const mainButton = document.querySelector('button[onclick*="handleCall"]') || document.querySelector('button');
+    const floatingBtn = document.getElementById('floatingConsultant');
+
+    if (floatingBtn) {
+        window.addEventListener('scroll', () => {
+            if (!mainButton) return;
+            const rect = mainButton.getBoundingClientRect();
+            
+            // Если верхняя кнопка ушла выше верхней границы экрана
+            const isScrolledPast = rect.bottom < 0;
+
+            if (isScrolledPast) {
+                if (!timer && floatingBtn.classList.contains('opacity-0')) {
+                    timer = setTimeout(() => {
+                        floatingBtn.classList.remove('translate-y-24', 'opacity-0', 'pointer-events-none');
+                        floatingBtn.classList.add('translate-y-0', 'opacity-100');
+                    }, 4000); 
+                }
+            } else {
+                // Возврат к кнопке заказа — мгновенно прячем плавающую кнопку
+                clearTimeout(timer);
+                timer = null;
+                floatingBtn.classList.remove('translate-y-0', 'opacity-100');
+                floatingBtn.classList.add('translate-y-24', 'opacity-0', 'pointer-events-none');
+            }
+        });
+    }
+});
+
+// 3. Управление модальным окном (разделение ПК / Телефон)
 function goBack() {
     if (document.referrer && document.referrer.includes(window.location.hostname)) {
         history.back();
@@ -120,6 +103,7 @@ function handleCall() {
     }
 }
 
+// Исправлено: убрана рекурсия (вызов самой себя)
 function hideCopyNotification() {
     const copyNotif = document.getElementById('copyNotification');
     if (copyNotif) {
@@ -138,7 +122,7 @@ function closeMobileModal() {
     if (mobileModal) mobileModal.classList.add('hidden');
 }
 
-// 4. Интерактивные QR-коды (только для ПК)[cite: 10]
+// 4. Интерактивные QR-коды (только для ПК)
 function showQR(platformName, qrImageSrc) {
     const container = document.getElementById('qrContainer');
     if (container) {
@@ -162,7 +146,7 @@ function resetQR() {
     }
 }
 
-// Функция клика по e-mail для ПК[cite: 10]
+// Функция клика по e-mail для ПК
 function handleEmailClick() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const emailAddress = (typeof contactData !== 'undefined' && contactData.email) ? contactData.email : "impulse.chem@gmail.com";
@@ -207,3 +191,23 @@ function closeEmailModal() {
         modal.classList.add('hidden');
     }
 }
+
+// Динамическое смещение плавающей кнопки при прокрутке до футера
+window.addEventListener('scroll', function() {
+    const consultant = document.getElementById('floatingConsultant');
+    const footer = document.querySelector('footer');
+    
+    if (!consultant || !footer) return;
+
+    const footerRect = footer.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+
+    // Если футер появляется в зоне видимости экрана
+    if (footerRect.top < windowHeight - 20) {
+        const overlap = (windowHeight - 20) - footerRect.top;
+        consultant.style.transform = `translateY(-${overlap}px)`;
+        consultant.style.transition = 'transform 0.1s ease-out';
+    } else {
+        consultant.style.transform = 'translateY(0px)';
+    }
+});
