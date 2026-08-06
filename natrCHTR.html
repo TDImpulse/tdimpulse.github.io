@@ -94,18 +94,18 @@
                         </div>
                     </div>
 
-<div class="mt-8 transition-all duration-300">
-    <div class="inline-flex items-center justify-center bg-gradient-to-r from-emerald-900/50 via-gray-950 to-gray-950 rounded-full overflow-hidden w-full border border-blue-500/40 shadow-[0_0_20px_rgba(59,130,246,0.3)]">
-        <!-- Левая часть с иконкой/контактами -->
-        <button onclick="handleCall()" class="px-4 sm:px-6 py-3.5 hover:bg-emerald-800/20 transition flex items-center justify-center flex-shrink-0">
+<div class="animated-spotlight-btn shadow-[0_0_25px_rgba(59,130,246,0.5)] mt-8 transition-all duration-300 hover:shadow-[0_0_35px_rgba(59,130,246,0.8)]">
+    <div class="inline-flex items-center justify-center bg-gray-950 rounded-full overflow-hidden w-full">
+        <!-- Левая часть с иконкой/контактами (flex-shrink-0 не дает ей сплющиваться) -->
+        <button onclick="handleCall()" class="px-4 sm:px-6 py-3.5 bg-gray-950 hover:bg-gray-900 transition flex items-center justify-center flex-shrink-0">
             <img src="Contacts.png" alt="Контакты" class="contacts-icon h-6 sm:h-7 w-auto">
         </button>
         
-        <!-- Прямая разделительная линия -->
+        <!-- Прямая разделительная линия между ними -->
         <div class="w-[1px] h-6 bg-gray-700 flex-shrink-0"></div>
 
         <!-- Правая часть с текстом -->
-        <button onclick="handleCall()" class="px-4 sm:px-6 py-3.5 hover:bg-white/5 transition font-bold text-white text-sm sm:text-base md:text-lg flex items-center justify-center text-center w-full">
+        <button onclick="handleCall()" class="px-4 sm:px-6 py-3.5 bg-gray-950 hover:bg-gray-900 transition font-bold text-white text-sm sm:text-base md:text-lg flex items-center justify-center text-center">
             Заказать продукт
         </button>
     </div>
