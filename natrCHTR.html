@@ -36,9 +36,10 @@
 
     <div class="bg-fixed-img"></div>
 
-    <main class="w-full px-2 sm:px-4 md:container md:mx-auto pt-2 pb-6">
+    <!-- Изменили обертку на w-full max-w-6xl mx-auto, чтобы контент адаптивно расширялся на экранах разной ширины -->
+    <main class="w-full max-w-6xl mx-auto px-2 sm:px-4 md:px-6 pt-2 pb-6">
 	
-        <nav class="mb-4" aria-label="breadcrumb">
+        <nav class="mb-4 px-1" aria-label="breadcrumb">
             <ol class="inline-flex items-center space-x-2 text-sm text-gray-400">
                 <li><a href="index.html" class="hover:text-white transition">Главная</a></li>
                 <li><span>/</span></li>
@@ -55,7 +56,7 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
     </svg>
 </button>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start mt-6">
                 <div class="bg-white/5 rounded-2xl p-8 flex items-center justify-center border border-white/10">
                     <img src="natr.png" alt="Натр едкий технический чешуированный ТР" class="w-full max-w-sm object-contain">
                 </div>
@@ -94,22 +95,22 @@
                         </div>
                     </div>
 
-<div class="animated-spotlight-btn shadow-[0_0_25px_rgba(59,130,246,0.5)] mt-8 transition-all duration-300 hover:shadow-[0_0_35px_rgba(59,130,246,0.8)]">
-    <div class="inline-flex items-center justify-center bg-gray-950 rounded-full overflow-hidden w-full">
-        <!-- Левая часть с иконкой/контактами (flex-shrink-0 не дает ей сплющиваться) -->
-        <button onclick="handleCall()" class="px-4 sm:px-6 py-3.5 bg-gray-950 hover:bg-gray-900 transition flex items-center justify-center flex-shrink-0">
-            <img src="Contacts.png" alt="Контакты" class="contacts-icon h-6 sm:h-7 w-auto">
-        </button>
-        
-        <!-- Прямая разделительная линия между ними -->
-        <div class="w-[1px] h-6 bg-gray-700 flex-shrink-0"></div>
-
-        <!-- Правая часть с текстом -->
-        <button onclick="handleCall()" class="px-4 sm:px-6 py-3.5 bg-gray-950 hover:bg-gray-900 transition font-bold text-white text-sm sm:text-base md:text-lg flex items-center justify-center text-center">
-            Заказать продукт
-        </button>
-    </div>
-</div>
+		<div class="animated-spotlight-btn shadow-[0_0_25px_rgba(59,130,246,0.5)] mt-8 transition-all duration-300 hover:shadow-[0_0_35px_rgba(59,130,246,0.8)] max-w-full">
+			<div class="inline-flex items-center bg-gray-950 rounded-full overflow-hidden w-full relative">
+				<button onclick="handleCall()" class="w-[43%] py-3.5 bg-gray-950 hover:bg-gray-900 transition-colors duration-300 cursor-pointer absolute left-0 h-full flex items-center justify-end pr-3 sm:pr-6 md:pr-3 z-20">
+					<div class="flex items-center pointer-events-none">
+						<img src="Contacts.png" alt="Контакты" class="contacts-icon h-6 sm:h-5 md:h-7 w-auto flex-shrink-0">
+					</div>
+				</button>
+				<div class="w-[1px] h-5 sm:h-6 bg-gray-700 absolute left-[43%] -translate-x-1/2 pointer-events-none z-30"></div>
+				<button onclick="handleCall()" class="w-[57%] py-3.5 bg-gray-950 hover:bg-gray-900 transition-colors duration-300 cursor-pointer absolute right-0 h-full flex items-center justify-start pl-3 sm:pl-6 md:pl-3 z-20 overflow-hidden">
+					<span class="font-bold text-white text-[17px] sm:text-[14px] md:text-[23px] whitespace-nowrap overflow-hidden text-ellipsis pointer-events-none">Заказать продукт</span>
+				</button>
+				<div class="invisible py-3.5 pointer-events-none w-full">
+					<span class="text-[11px] sm:text-[14px] md:text-[23px] font-bold">Заказать продукт</span>
+				</div>
+			</div>
+		</div>
                 </div>
             </div>
         </div>
@@ -161,32 +162,44 @@
                 <strong class="text-white">Хранение:</strong> Гарантийный срок хранения — 1 год со дня изготовления в сухих складских помещениях в упаковке изготовителя.
             </p>
 
-            <h3 class="text-xl font-bold mb-6">Паспорт качества продукции</h3>
-            
-            <div class="bg-white/95 p-2 rounded-xl border-4 border-white shadow-lg w-full">
-                <img src="pasport_natr.jpg" alt="Паспорт качества натр едкий" class="w-full h-auto rounded-lg">
-            </div>
+     		<h3 class="text-xl font-bold mb-6">Паспорт качества продукции</h3>
+
+			<div class="relative bg-white/95 p-2 rounded-xl border-4 border-white shadow-lg w-full group">
+				
+				<img src="pasport_natr.jpg" alt="Паспорт качества натр едкий" class="w-full h-auto rounded-lg">
+				
+				<a href="pasport_natr.jpg" download="Паспорт_качества_Натр_едкий_ТР.jpg" 
+				   class="absolute bottom-6 right-6 inline-flex items-center gap-2 bg-blue-900/90 hover:bg-blue-800 text-white px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl font-bold transition shadow-xl border border-white/20 backdrop-blur-sm group-hover:scale-105 cursor-pointer">
+					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+					</svg>
+					<span class="text-xs sm:text-sm">Скачать</span>
+				</a>
+
+			</div>
         </div>
 
     </main>
 	
 	
 	<!-- ФУТЕР САЙТА -->
-        <footer class="mt-8 md:mt-12 bg-black/50 backdrop-blur-md border border-white/10 rounded-2xl md:rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
-            <div class="flex items-center gap-4">
-                <img src="logo.png" alt="Торговый Дом Импульс" class="h-10 w-auto object-contain">
-                <div class="text-left">
-                    <div class="text-white font-bold tracking-wide">Торговый Дом Импульс</div>
-                    <div class="text-xs text-gray-400">Поставки промышленной химии оптом</div>
+        <footer class="w-full max-w-6xl mx-auto px-2 sm:px-4 md:px-6">
+            <div class="mt-8 md:mt-12 bg-black/50 backdrop-blur-md border border-white/10 rounded-2xl md:rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
+                <div class="flex items-center gap-4">
+                    <img src="logo.png" alt="Торговый Дом Импульс" class="h-10 w-auto object-contain">
+                    <div class="text-left">
+                        <div class="text-white font-bold tracking-wide">Торговый Дом Импульс</div>
+                        <div class="text-xs text-gray-400">Поставки промышленной химии оптом</div>
+                    </div>
                 </div>
-            </div>
-            <div>
-                <a href="about.html" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-full text-sm font-medium border border-white/20 transition backdrop-blur-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    Карта партнёра
-                </a>
+                <div>
+                    <a href="about.html" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-full text-sm font-medium border border-white/20 transition backdrop-blur-sm">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                        Карта партнёра
+                    </a>
+                </div>
             </div>
         </footer>
 	
@@ -291,7 +304,7 @@
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
         </button>
         <div class="w-12 h-12 rounded-full bg-blue-900/50 flex items-center justify-center mx-auto mb-4 text-blue-400 border border-blue-500/30">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2,2 0 002-2V7a2,2 0 00-2-2H5a2,2 0 00-2 2v10a2,2 0 002 2z"></path></svg>
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2,2 0 00-2-2H5a2,2 0 00-2 2v10a2,2 0 002 2z"></path></svg>
         </div>
         <h3 class="text-xl md:text-2xl font-bold mb-2 text-white">Электронная почта</h3>
         <p class="text-gray-300 text-sm mb-6">Адрес скопирован в буфер обмена. Вы можете отправить письмо напрямую:</p>
