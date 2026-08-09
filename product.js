@@ -47,6 +47,11 @@ document.addEventListener("DOMContentLoaded", function() {
         emailTd.textContent = getContact('email');
     }
 	
+	const mEmailEl = document.getElementById('mEmailLink');
+	if (mEmailEl) {
+		mEmailEl.href = "mailto:" + getContact('email');
+	}
+	
 	const phoneComDirTd = document.getElementById('phoneComDir');
     if (phoneComDirTd) {
         phoneComDirTd.textContent = getContact('phoneComDir');
