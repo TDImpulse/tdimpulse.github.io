@@ -637,3 +637,13 @@ a.contact-text:hover {
         background-color: rgba(13, 18, 30, 0.92) !important;
     }
 } 
+
+
+@media (max-width: 768px) {
+    /* Делаем фон плавающей кнопки более плотным и синим, чтобы она не казалась черной */
+    #floatingConsultant button {
+        background-color: rgba(30, 58, 138, 0.95) !important; /* Увеличили непрозрачность до 95% и задали чистый синий цвет */
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+    }
+}

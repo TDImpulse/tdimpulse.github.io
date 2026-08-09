@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Торговый дом Импульс | Опт</title>
     <link rel="stylesheet" href="style.css">
+	<script src="https://cdn.tailwindcss.com"></script>
+    <script src="product.js"></script>
 </head>
 <body>
     <!-- Фоновая картинка с фиксированным позиционированием и прозрачностью -->
@@ -17,21 +19,19 @@
 			<div class="header-left">
 				<div class="contacts-dropdown">
 					<button class="contacts-btn" onclick="toggleContactsMenu(event)" aria-label="Контакты">
-						<img src="Contacts.png" alt="Контакты" class="contacts-icon">
+						<img src="images/Contacts.webp" alt="Контакты" class="contacts-icon">
 					</button>
 				<div class="contacts-menu">
 					<!-- Отдел продаж -->
 					<div class="contact-group">
 						<span class="contact-label">Отдел продаж:</span>
-						<span class="contact-number" onclick="handlePhoneClick('+79375006695')">+7 937 500-66-95</span>
-						
+						<span id="headerSalesPhone" class="contact-number"></span>
 					</div>
 
 					<!-- Коммерческий директор -->
 					<div class="contact-group">
 						<span class="contact-label">Коммерческий директор:</span>
-						<span class="contact-number" onclick="handlePhoneClick('+79378559501')">+7 937 855-95-01</span>
-						
+						<span id="headerComDirPhone" class="contact-number"></span>
 					</div>
 
 					<div class="menu-divider"></div>
@@ -39,7 +39,7 @@
 					<!-- Электронная почта -->
 					<div class="contact-group">
 						<span class="contact-tag">E-mail</span>
-					<span class="contact-text" onclick="handleEmailClick('impulse.chem@gmail.com')">impulse.chem@gmail.com</span>
+						<span id="headerEmail" class="contact-text"></span>
 					</div>
 
 					<!-- Почтовый адрес -->
@@ -54,7 +54,7 @@
             <!-- Центральная колонка: логотип и подзаголовок -->
             <div class="header-center">
                 <h1 class="main-title">
-                    <img src="logo.png" alt="Торговый дом Импульс" class="main-logo">
+                    <img src="images/logo.webp" alt="Торговый дом Импульс" class="main-logo">
                 </h1>
                 <p class="subtitle">Прямые оптовые поставки с предприятий АО Росхим</p>
             </div>
@@ -69,52 +69,182 @@
     <!-- Основной контент с карточками -->
     <div class="hero-section">
         <div class="hero-inner">
+<!-- Первые 4 основные карточки -->
             <div class="products-grid">
-                
                 <!-- Карточка 1: Натр едкий -->
-                <a href="natrCHTR.html" class="product-card first-product">
+                <a href="natr-edkiy-cheshuirovannyy-tr.html" class="product-card first-product">
                     <div class="product-image-box">
-                        <img src="natr.png" alt="Натр едкий чешуированный" class="product-img">
+                        <img src="images/natr.webp" alt="Натр едкий чешуированный" class="product-img">
                     </div>
-                    <h3 class="product-title">Натр едкий чешуированный</h3>
+                    <h3 class="product-title text-sm lg:text-xl">
+						Натр едкий чешуированный
+						<span class="block text-[11px] sm:text-xs text-sky-200/70 font-normal mt-0.5 sm:mt-1">СТО 00203312-017-2011</span>
+					</h3>
                 </a>
                 
                 <!-- Карточка 2: Кислота соляная -->
                 <a href="kislota_solyanaya.html" class="product-card">
                     <div class="product-image-box">
-                        <img src="ksst.png" alt="Кислота соляная" class="product-img">
+                        <img src="images/ksst.webp" alt="Кислота соляная" class="product-img">
                     </div>
-                    <h3 class="product-title">Кислота соляная</h3>
+                    <h3 class="product-title text-sm lg:text-xl">
+                        Кислота соляная техническая
+                        <span class="block text-[1px] sm:text-xs text-sky-200/70 font-normal mt-0.5 sm:mt-1">ГОСТ 857-95</span>
+                    </h3>
                 </a>
                 
                 <!-- Карточка 3: Гипохлорит натрия -->
                 <a href="gipohloritA.html" class="product-card">
                     <div class="product-image-box">
-                        <img src="gipohlorit.png" alt="Гипохлорит натрия" class="product-img">
+                        <img src="images/gipohlorit.webp" alt="Гипохлорит натрия" class="product-img">
                     </div>
-                    <h3 class="product-title">Гипохлорит натрия</h3>
+                    <h3 class="product-title text-sm sm:text-base">
+                        Гипохлорит натрия
+                        <span class="block text-[11px] sm:text-xs text-sky-200/70 font-normal mt-0.5 sm:mt-1">ГОСТ 1692-85</span>
+                    </h3>
                 </a>
                 
                 <!-- Карточка 4: Сода кальцинированная -->
                 <a href="soda_kalsin.html" class="product-card">
                     <div class="product-image-box">
-                        <img src="soda.png" alt="Сода кальцинированная" class="product-img">
+                        <img src="images/soda.webp" alt="Сода кальцинированная" class="product-img">
                     </div>
-                    <h3 class="product-title">Сода кальцинированная</h3>
+                    <h3 class="product-title text-sm sm:text-base">
+                        Сода кальцинированная
+                        <span class="block text-[11px] sm:text-xs text-sky-200/70 font-normal mt-0.5 sm:mt-1">ГОСТ 5100-85</span>
+                    </h3>
                 </a>
-                
             </div>
             
-            <div class="catalog-btn-wrapper">
+            <!-- Кнопка Каталог -->
+            <div class="catalog-btn-wrapper" style="margin: 30px 0;">
                 <a href="catalog.html" class="btn-catalog">Каталог продукции</a>
+            </div>
+
+            <!-- Дополнительные 8 карточек -->
+            <div class="products-grid">
+                <!-- Карточка 5 -->
+                <a href="product5.html" class="product-card">
+                    <div class="product-image-box">
+                        <img src="images/natr.webp" alt="Товар 5" class="product-img">
+                    </div>
+                    <h3 class="product-title">Наименование товара 5</h3>
+                </a>
+
+                <!-- Карточка 6 -->
+                <a href="product6.html" class="product-card">
+                    <div class="product-image-box">
+                        <img src="images/ksst.webp" alt="Товар 6" class="product-img">
+                    </div>
+                    <h3 class="product-title">Наименование товара 6</h3>
+                </a>
+
+                <!-- Карточка 7 -->
+                <a href="product7.html" class="product-card">
+                    <div class="product-image-box">
+                        <img src="images/gipohlorit.webp" alt="Товар 7" class="product-img">
+                    </div>
+                    <h3 class="product-title">Наименование товара 7</h3>
+                </a>
+
+                <!-- Карточка 8 -->
+                <a href="product8.html" class="product-card">
+                    <div class="product-image-box">
+                        <img src="images/soda.webp" alt="Товар 8" class="product-img">
+                    </div>
+                    <h3 class="product-title">Наименование товара 8</h3>
+                </a>
+
+                <!-- Карточка 9 -->
+                <a href="product9.html" class="product-card">
+                    <div class="product-image-box">
+                        <img src="images/natr.webp" alt="Товар 9" class="product-img">
+                    </div>
+                    <h3 class="product-title">Наименование товара 9</h3>
+                </a>
+
+                <!-- Карточка 10 -->
+                <a href="product10.html" class="product-card">
+                    <div class="product-image-box">
+                        <img src="images/ksst.webp" alt="Товар 10" class="product-img">
+                    </div>
+                    <h3 class="product-title">Наименование товара 10</h3>
+                </a>
+
+                <!-- Карточка 11 -->
+                <a href="product11.html" class="product-card">
+                    <div class="product-image-box">
+                        <img src="images/gipohlorit.webp" alt="Товар 11" class="product-img">
+                    </div>
+                    <h3 class="product-title">Наименование товара 11</h3>
+                </a>
+
+                <!-- Карточка 12 -->
+                <a href="product12.html" class="product-card">
+                    <div class="product-image-box">
+                        <img src="images/soda.webp" alt="Товар 12" class="product-img">
+                    </div>
+                    <h3 class="product-title">Наименование товара 12</h3>
+                </a>
+				
+				
+				      <!-- Карточка 9 -->
+                <a href="product9.html" class="product-card">
+                    <div class="product-image-box">
+                        <img src="images/natr.webp" alt="Товар 9" class="product-img">
+                    </div>
+                    <h3 class="product-title">Наименование товара 9</h3>
+                </a>
+
+                <!-- Карточка 10 -->
+                <a href="product10.html" class="product-card">
+                    <div class="product-image-box">
+                        <img src="images/ksst.webp" alt="Товар 10" class="product-img">
+                    </div>
+                    <h3 class="product-title">Наименование товара 10</h3>
+                </a>
+
+                <!-- Карточка 11 -->
+                <a href="product11.html" class="product-card">
+                    <div class="product-image-box">
+                        <img src="images/gipohlorit.webp" alt="Товар 11" class="product-img">
+                    </div>
+                    <h3 class="product-title">Наименование товара 11</h3>
+                </a>
+
+                <!-- Карточка 12 -->
+                <a href="product12.html" class="product-card">
+                    <div class="product-image-box">
+                        <img src="images/soda.webp" alt="Товар 12" class="product-img">
+                    </div>
+                    <h3 class="product-title">Наименование товара 12</h3>
+                </a>
             </div>
         </div>
     </div>
 
-    <!-- Футер -->
-    <footer class="main-footer">
-        <div class="footer-inner">
-            <p>© 2026 ООО «Торговый дом Импульс».</p>
+
+
+	
+	
+    <!-- ФУТЕР САЙТА -->
+    <footer class="w-full max-w-4xl mx-auto px-2 sm:px-4 md:px-6">
+        <div class="mt-8 md:mt-12 bg-black/50 backdrop-blur-md border border-white/10 rounded-2xl md:rounded-3xl p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl mb-8">
+            <div class="flex items-center gap-4">
+                <img src="images/logo.webp" alt="Торговый Дом Импульс" class="h-10 w-auto object-contain">
+                <div class="text-left">
+                    <div class="text-white font-bold tracking-wide">Торговый Дом Импульс</div>
+                    <div class="text-xs text-gray-400">Поставки промышленной химии оптом</div>
+                </div>
+            </div>
+            <div>
+                <a href="about.html" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-full text-sm font-medium border border-white/20 transition backdrop-blur-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Карта партнёра
+                </a>
+            </div>
         </div>
     </footer>
 
@@ -138,19 +268,45 @@
     </div>
 </div>
 
+
 <script>
-// ===== 1. ЛОГИКА ВЫПАДАЮЩЕГО МЕНЮ КОНТАКТОВ =====
+// ===== 1. ПОДСТАНОВКА ДАННЫХ ИЗ product.js ПРИ ЗАГРУЗКЕ =====
+document.addEventListener("DOMContentLoaded", function() {
+    // Получаем расшифрованные данные из product.js
+    const salesPhone = getContact('phone');
+    const comDirPhone = getContact('phoneComDir');
+    const emailAddr = getContact('email');
+
+    // Заполняем Отдел продаж
+    const salesEl = document.getElementById('headerSalesPhone');
+    if (salesEl && salesPhone) {
+        salesEl.textContent = salesPhone;
+        salesEl.onclick = function() { handlePhoneClick(salesPhone); };
+    }
+
+    // Заполняем Коммерческого директора
+    const comDirEl = document.getElementById('headerComDirPhone');
+    if (comDirEl && comDirPhone) {
+        comDirEl.textContent = comDirPhone;
+        comDirEl.onclick = function() { handlePhoneClick(comDirPhone); };
+    }
+
+    // Заполняем E-mail
+    const emailEl = document.getElementById('headerEmail');
+    if (emailEl && emailAddr) {
+        emailEl.textContent = emailAddr;
+        emailEl.onclick = function() { handleEmailClick(emailAddr); };
+    }
+});
+
+// ===== 2. ЛОГИКА ВЫПАДАЮЩЕГО МЕНЮ КОНТАКТОВ =====
 const dropdown = document.querySelector('.contacts-dropdown');
 const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-// Запоминаем время открытия в миллисекундах
 let openTimestamp = 0; 
 
 if (!isMobileDevice && dropdown) {
-    // При наведении на ПК открываем меню
     dropdown.addEventListener('mouseenter', function() {
         if (!this.classList.contains('closed-by-click')) {
-            // Если меню ещё не было открыто — открываем и фиксируем время
             if (!this.classList.contains('is-open')) {
                 this.classList.add('is-open');
                 openTimestamp = Date.now();
@@ -158,7 +314,6 @@ if (!isMobileDevice && dropdown) {
         }
     });
 
-    // При уходе мыши с блока — сбрасываем состояние
     dropdown.addEventListener('mouseleave', function() {
         this.classList.remove('is-open');
         this.classList.remove('closed-by-click');
@@ -166,45 +321,28 @@ if (!isMobileDevice && dropdown) {
     });
 }
 
-// Клик / Тап по иконке контактов
 function toggleContactsMenu(event) {
     event.stopPropagation();
-    
     if (!dropdown) return;
 
-    // Логика для ПК
     if (!isMobileDevice) {
         if (dropdown.classList.contains('is-open')) {
             const timePassed = Date.now() - openTimestamp;
-            
-            // Если с момента открытия прошло МЕНЬШЕ 1000 мс (1 секунды) — 
-            // игнорируем клик (защита от случайного закрытия при наведении)
-            if (timePassed < 1000) {
-                return;
-            }
+            if (timePassed < 1000) return;
 
-            // Если прошло 1 секунда и больше — закрываем меню по клику
             dropdown.classList.remove('is-open');
             dropdown.classList.add('closed-by-click');
             openTimestamp = 0;
         } else {
-            // Если было закрыто — открываем по клику
             dropdown.classList.add('is-open');
             dropdown.classList.remove('closed-by-click');
             openTimestamp = Date.now();
         }
-    } 
-    // Логика для смартфонов (простое открытие/закрытие по тапу)
-    else {
-        if (dropdown.classList.contains('is-open')) {
-            dropdown.classList.remove('is-open');
-        } else {
-            dropdown.classList.add('is-open');
-        }
+    } else {
+        dropdown.classList.toggle('is-open');
     }
 }
 
-// Закрытие меню при клике в случайную точку экрана
 document.addEventListener('click', function(event) {
     if (dropdown && !dropdown.contains(event.target)) {
         dropdown.classList.remove('is-open');
@@ -213,14 +351,11 @@ document.addEventListener('click', function(event) {
     }
 });
 
-
-// ===== 2. ЛОГИКА КЛИКА ПО НОМЕРАМ ТЕЛЕФОНОВ =====
+// ===== 3. ОБРАБОТКА КЛИКОВ ПО КОНТАКТАМ =====
 function handlePhoneClick(phoneNumber) {
     if (isMobileDevice) {
-        // На смартфоне открываем звонок
         window.location.href = "tel:" + phoneNumber;
     } else {
-        // На ПК показываем модальное окно и копируем номер
         const modal = document.getElementById('contactsCallModal');
         const phoneVal = document.getElementById('modalPhoneValue');
 
@@ -237,17 +372,13 @@ function handlePhoneClick(phoneNumber) {
 
 function closeContactsModal() {
     const modal = document.getElementById('contactsCallModal');
-    if (modal) {
-        modal.classList.add('hidden');
-    }
+    if (modal) modal.classList.add('hidden');
 }
-// ===== ЛОГИКА ДЛЯ ПОЧТЫ (E-MAIL) =====
+
 function handleEmailClick(emailAddress) {
     if (isMobileDevice) {
-        // На смартфоне открываем почтовый клиент
         window.location.href = "mailto:" + emailAddress;
     } else {
-        // На ПК показываем окно почты и копируем в буфер
         const modal = document.getElementById('contactsEmailModal');
         const emailVal = document.getElementById('modalEmailValue');
 
@@ -264,11 +395,10 @@ function handleEmailClick(emailAddress) {
 
 function closeContactsEmailModal() {
     const modal = document.getElementById('contactsEmailModal');
-    if (modal) {
-        modal.classList.add('hidden');
-    }
+    if (modal) modal.classList.add('hidden');
 }
-
 </script>
+
+
 </body>
 </html>

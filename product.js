@@ -1,48 +1,61 @@
-// 1. Данные для защищенной подстановки
+// 1. Зашифрованные данные (XOR ^ 7 + Hex)
 const contactData = {
-    phone: "+79695312329",
-    whatsapp: "https://wa.me/+212694170179",
-    telegram: "https://t.me/tdimpulse",
-    max: "https://max.ru/u/f9LHodD0cOIMQT5rPvLaM7KO2n_qeFccogrjiOu2d8nfM7ya7K5cp-NQd6k",
-    email: "impulse.chem@gmail.com"
+    phone: "2c303e313e3234363534353e",
+    phoneComDir: "2c303e34303f32323e323736", 
+	email: "6e6a77726b746229646f626a47606a666e6b2964686a",
+    whatsapp: "6f737377743d28287066296a62282c353635313e3336303736303e",
+    telegram: "6f737377743d282873296a622873636e6a77726b7462",
+    max: "6f737377743d28286a667f297572287228613e4b4f6863433764484e4a5653327557714b664a304c4835695876624164646860756d6e487235633f69614a307e66304c3264772a495663316c"
 };
 
-// 2. Автоматическая подстановка защищенных данных и инициализация скролла
-document.addEventListener("DOMContentLoaded", function() {
-    // ПК версия модалки
-    const phoneEl = document.getElementById('modalPhoneNumber');
-    if (phoneEl) phoneEl.textContent = contactData.phone;
+// 2. Функция мгновенной и точной расшифровки
+function getContact(type) {
+    const hex = contactData[type];
+    if (!hex) return '';
 
+    let result = '';
+    for (let i = 0; i < hex.length; i += 2) {
+        // Извлекаем байт и применяем XOR обратно
+        const charCode = parseInt(hex.substr(i, 2), 16) ^ 7;
+        result += String.fromCharCode(charCode);
+    }
+    return result;
+}
+
+// 2. Инициализация ссылок на мессенджеры при загрузке страницы
+document.addEventListener("DOMContentLoaded", function() {
     const waEl = document.getElementById('waLink');
-    if (waEl) waEl.href = contactData.whatsapp;
+    if (waEl) waEl.href = getContact('whatsapp');
 
     const tgEl = document.getElementById('tgLink');
-    if (tgEl) tgEl.href = contactData.telegram;
+    if (tgEl) tgEl.href = getContact('telegram');
 
     const maxEl = document.getElementById('maxLink');
-    if (maxEl) maxEl.href = contactData.max;
-
-    const emailEl = document.getElementById('emailLink');
-    if (emailEl) emailEl.href = "mailto:" + contactData.email;
-
-    // Мобильная версия модалки
-    const mPhoneEl = document.getElementById('mobileModalPhone');
-    if (mPhoneEl) {
-        mPhoneEl.textContent = contactData.phone;
-        mPhoneEl.href = "tel:" + contactData.phone;
-    }
+    if (maxEl) maxEl.href = getContact('max');
 
     const mWaEl = document.getElementById('mWaLink');
-    if (mWaEl) mWaEl.href = contactData.whatsapp;
+    if (mWaEl) mWaEl.href = getContact('whatsapp');
 
     const mTgEl = document.getElementById('mTgLink');
-    if (mTgEl) mTgEl.href = contactData.telegram;
+    if (mTgEl) mTgEl.href = getContact('telegram');
 
     const mMaxEl = document.getElementById('mMaxLink');
-    if (mMaxEl) mMaxEl.href = contactData.max;
-
-    const mEmailEl = document.getElementById('mEmailLink');
-    if (mEmailEl) mEmailEl.href = "mailto:" + contactData.email;
+    if (mMaxEl) mMaxEl.href = getContact('max');
+	
+	const emailTd = document.getElementById('email');
+    if (emailTd) {
+        emailTd.textContent = getContact('email');
+    }
+	
+	const phoneComDirTd = document.getElementById('phoneComDir');
+    if (phoneComDirTd) {
+        phoneComDirTd.textContent = getContact('phoneComDir');
+    }
+		
+	const phone = document.getElementById('phone');
+    if (phone) {
+        phone.textContent = getContact('phone');
+    }
 
     // Логика появления и исчезновения плавающей кнопки при прокрутке
     let timer = null;
@@ -53,8 +66,6 @@ document.addEventListener("DOMContentLoaded", function() {
         window.addEventListener('scroll', () => {
             if (!mainButton) return;
             const rect = mainButton.getBoundingClientRect();
-            
-            // Если верхняя кнопка ушла выше верхней границы экрана
             const isScrolledPast = rect.bottom < 0;
 
             if (isScrolledPast) {
@@ -65,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function() {
                     }, 4000); 
                 }
             } else {
-                // Возврат к кнопке заказа — мгновенно прячем плавающую кнопку
                 clearTimeout(timer);
                 timer = null;
                 floatingBtn.classList.remove('translate-y-0', 'opacity-100');
@@ -75,25 +85,39 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 });
 
-// 3. Управление модальным окном (разделение ПК / Телефон)
-function goBack() {
+
+function goBack(event) {
     if (document.referrer && document.referrer.includes(window.location.hostname)) {
+        if (event) event.preventDefault();
         history.back();
-    } else {
+    } else if (!event) {
         window.location.href = 'catalog.html';
     }
 }
 
 function handleCall() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    
+    const realPhone = getContact('phone');
+
+    const phoneEl = document.getElementById('modalPhoneNumber');
+    if (phoneEl) phoneEl.textContent = realPhone;
+
+    const mPhoneEl = document.getElementById('mobileModalPhone');
+    if (mPhoneEl) {
+        mPhoneEl.textContent = realPhone;
+        mPhoneEl.href = "tel:" + realPhone;
+    }
+
     if (isMobile) {
         const mobileModal = document.getElementById('mobileCallModal');
         if (mobileModal) mobileModal.classList.remove('hidden');
     } else {
         const modal = document.getElementById('callModal');
         if (modal) modal.classList.remove('hidden');
-        navigator.clipboard.writeText(contactData.phone);
+        
+        if (navigator.clipboard && realPhone) {
+            navigator.clipboard.writeText(realPhone);
+        }
         
         const copyNotif = document.getElementById('copyNotification');
         if (copyNotif) {
@@ -103,7 +127,6 @@ function handleCall() {
     }
 }
 
-// Исправлено: убрана рекурсия (вызов самой себя)
 function hideCopyNotification() {
     const copyNotif = document.getElementById('copyNotification');
     if (copyNotif) {
@@ -122,17 +145,28 @@ function closeMobileModal() {
     if (mobileModal) mobileModal.classList.add('hidden');
 }
 
-// 4. Интерактивные QR-коды (только для ПК)
+// 4. Безопасные интерактивные QR-коды (защита от XSS)
 function showQR(platformName, qrImageSrc) {
     const container = document.getElementById('qrContainer');
-    if (container) {
-        container.innerHTML = `
-            <div class="flex flex-col items-center justify-center animate-fadeIn">
-                <img src="${qrImageSrc}" alt="QR ${platformName}" class="w-[140px] h-[140px] object-contain bg-white p-2 rounded-xl shadow-lg mb-1">
-                <span class="text-[14px] text-gray-400">Для перехода в ${platformName} с помощью телефона отсканируйте QR код</span>
-            </div>
-        `;
-    }
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'flex flex-col items-center justify-center animate-fadeIn';
+
+    const img = document.createElement('img');
+    img.src = qrImageSrc;
+    img.alt = `QR ${platformName}`;
+    img.className = 'w-[140px] h-[140px] object-contain bg-white p-2 rounded-xl shadow-lg mb-1';
+
+    const text = document.createElement('span');
+    text.className = 'text-[14px] text-gray-400';
+    text.textContent = `Для перехода в ${platformName} с помощью телефона отсканируйте QR код`;
+
+    wrapper.appendChild(img);
+    wrapper.appendChild(text);
+    container.appendChild(wrapper);
 }
 
 function resetQR() {
@@ -140,16 +174,16 @@ function resetQR() {
     if (container) {
         container.innerHTML = `
             <div class="flex flex-col items-center justify-center">
-                <img src="logo.png" alt="Логотип ТД Импульс" class="w-[270px] h-[270px] object-contain p-2 rounded-xl mb-1 opacity-90">
+                <img src="images/logo.webp" alt="Логотип ТД Импульс" class="w-[270px] h-[270px] object-contain p-2 rounded-xl mb-1 opacity-90">
             </div>
         `;
     }
 }
 
-// Функция клика по e-mail для ПК
+// 5. Обработка E-mail по клику
 function handleEmailClick() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    const emailAddress = (typeof contactData !== 'undefined' && contactData.email) ? contactData.email : "impulse.chem@gmail.com";
+    const emailAddress = getContact('email');
 
     if (isMobile) {
         window.location.href = "mailto:" + emailAddress;
@@ -202,7 +236,6 @@ window.addEventListener('scroll', function() {
     const footerRect = footer.getBoundingClientRect();
     const windowHeight = window.innerHeight;
 
-    // Если футер появляется в зоне видимости экрана
     if (footerRect.top < windowHeight - 20) {
         const overlap = (windowHeight - 20) - footerRect.top;
         consultant.style.transform = `translateY(-${overlap}px)`;

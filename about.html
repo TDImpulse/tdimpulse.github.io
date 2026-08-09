@@ -7,7 +7,7 @@
     <!-- Tailwind CSS для стилизации -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Фиксированный фон с прозрачностью, как у натра едкого */
+        /* Фиксированный фон с прозрачностью */
         .bg-fixed-img {
             position: fixed;
             top: 0;
@@ -22,7 +22,7 @@
             z-index: -1;
         }
     </style>
-</head>
+  </head>
 <body class="bg-gray-950 text-gray-100 min-h-screen flex flex-col justify-between selection:bg-blue-600 selection:text-white">
 
     <!-- Фоновая картинка с пониженной яркостью -->
@@ -31,10 +31,10 @@
    <!-- ХЕДЕР -->
     <header class="max-w-4xl mx-auto w-full px-3 sm:px-6 py-4 flex items-center justify-between border-b border-white/10">
         <a href="index.html" class="flex items-center gap-2 sm:gap-3">
-            <img src="logo.png" alt="Торговый Дом Импульс" class="h-8 sm:h-10 w-auto object-contain">
+            <img src="images/logo.webp" alt="Торговый Дом Импульс" class="h-8 sm:h-10 w-auto object-contain">
             <span class="text-xs sm:text-base font-bold tracking-wide leading-tight">Торговый Дом Импульс</span>
         </a>
-        <a href="index.html" class="text-xs sm:text-sm text-gray-400 hover:text-white transition text-right leading-tight">← На главную</a>
+        <a href="index.html" class="text-xs sm:text-sm text-gray-400 hover:text-white transition text-right leading-tight">&larr; На главную</a>
     </header>
 
     <!-- ОСНОВНОЙ КОНТЕНТ -->
@@ -55,8 +55,8 @@
                 <p class="text-gray-400 text-sm">Официальные реквизиты и банковская информация ООО «ТД Импульс».</p>
             </div>
 
-            <!-- 3. Таблица с информацией -->
-            <div class="overflow-x-auto mb-8 border border-white/10 rounded-xl sm:rounded-2xl">
+            <!-- 3. Таблица с информацией (с заглушками для защиты от парсеров) -->
+            <div id="contactsTableWrapper" class="overflow-x-auto mb-8 border border-white/10 rounded-xl sm:rounded-2xl">
                 <table class="w-full text-left border-collapse text-xs sm:text-sm md:text-base">
                     <tbody class="divide-y divide-white/10">
                         <tr class="hover:bg-white/5 transition">
@@ -77,11 +77,14 @@
                         </tr>
                         <tr class="hover:bg-white/5 transition">
                             <td class="p-3 sm:p-4 md:p-5 text-gray-400 font-medium">Телефоны</td>
-                            <td class="p-3 sm:p-4 md:p-5 text-white">тел.: 8 (3473) 426-704, моб.: 8 (917) 486-93-33</td>
+                            <td class="p-3 sm:p-4 md:p-5 text-white">
+                                менеджер: <span id="phone">+7 (xxx) xxx-xx-xx</span><br>
+                                коммерческий директор: <span id="phoneComDir">+7 (xxx) xxx-xx-xx</span>
+                            </td>
                         </tr>
                         <tr class="hover:bg-white/5 transition">
-                            <td class="p-3 sm:p-4 md:p-5 text-gray-400 font-medium">WhatsApp</td>
-                            <td class="p-3 sm:p-4 md:p-5 text-white">8 (965) 641-18-17</td>
+                            <td class="p-3 sm:p-4 md:p-5 text-gray-400 font-medium">MAX мессенджер</td>
+                            <td class="p-3 sm:p-4 md:p-5 text-white" id="phoneComDirMAX">+7 (xxx) xxx-xx-xx</td>
                         </tr>
                         <tr class="hover:bg-white/5 transition">
                             <td class="p-3 sm:p-4 md:p-5 text-gray-400 font-medium">E-mail</td>
@@ -131,6 +134,6 @@
 
         </div>
     </main>
-
+ <script src="about.js"></script>
 </body>
 </html>
