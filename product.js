@@ -8,6 +8,10 @@ const contactData = {
     max: "6f737377743d28286a667f297572287228613e4b4f6863433764484e4a5653327557714b664a304c4835695876624164646860756d6e487235633f69614a307e66304c3264772a495663316c"
 };
 
+let callModalStartTime = 0; // Переменная для таймера
+let qrStartTime = 0;        // Время начала просмотра QR-кода
+let currentQrPlatform = ''; // Текущая активная платформа QR-кода
+
 // 2. Функция мгновенной и точной расшифровки
 function getContact(type) {
     const hex = contactData[type];
@@ -24,24 +28,42 @@ function getContact(type) {
 
 // 2. Инициализация ссылок на мессенджеры при загрузке страницы
 document.addEventListener("DOMContentLoaded", function() {
-    const waEl = document.getElementById('waLink');
-    if (waEl) waEl.href = getContact('whatsapp');
-
-    const tgEl = document.getElementById('tgLink');
-    if (tgEl) tgEl.href = getContact('telegram');
-
-    const maxEl = document.getElementById('maxLink');
-    if (maxEl) maxEl.href = getContact('max');
-
-    const mWaEl = document.getElementById('mWaLink');
-    if (mWaEl) mWaEl.href = getContact('whatsapp');
-
-    const mTgEl = document.getElementById('mTgLink');
-    if (mTgEl) mTgEl.href = getContact('telegram');
-
-    const mMaxEl = document.getElementById('mMaxLink');
-    if (mMaxEl) mMaxEl.href = getContact('max');
+	// Если это главная страница, логируем короткое название
+    if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '') {
+        logEvent('۰ Главная');
+    } else {
+        // Иначе ищем хлебные крошки для страниц товаров
+        const breadcrumbTitle = document.querySelector('nav[aria-label="breadcrumb"] span.text-white.font-medium');
+        if (breadcrumbTitle) {
+            logEvent('۰ ' + breadcrumbTitle.textContent.trim());
+        }
+    }
 	
+    // --- WhatsApp (десктоп и мобильный) ---
+    [document.getElementById('waLink'), document.getElementById('mWaLink')].forEach(el => {
+        if (el) {
+            el.href = getContact('whatsapp');
+            el.addEventListener('click', () => logEvent('[🗨 WhatsApp]'));
+        }
+    });
+
+    // --- Telegram (десктоп и мобильный) ---
+    [document.getElementById('tgLink'), document.getElementById('mTgLink')].forEach(el => {
+        if (el) {
+            el.href = getContact('telegram');
+            el.addEventListener('click', () => logEvent('[🗨 Telegram]'));
+        }
+    });
+
+    // --- Max / Другой мессенджер (десктоп и мобильный) ---
+    [document.getElementById('maxLink'), document.getElementById('mMaxLink')].forEach(el => {
+        if (el) {
+            el.href = getContact('max');
+            el.addEventListener('click', () => logEvent('[🗨 Max]'));
+        }
+    });
+	
+	// --- E-mail ---
 	const emailTd = document.getElementById('email');
     if (emailTd) {
         emailTd.textContent = getContact('email');
@@ -50,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	const mEmailEl = document.getElementById('mEmailLink');
 	if (mEmailEl) {
 		mEmailEl.href = "mailto:" + getContact('email');
+        mEmailEl.addEventListener('click', () => logEvent('[📧 Email]'));
 	}
 	
 	const phoneComDirTd = document.getElementById('phoneComDir');
@@ -61,8 +84,9 @@ document.addEventListener("DOMContentLoaded", function() {
     if (phone) {
         phone.textContent = getContact('phone');
     }
-
-    // Логика появления и исчезновения плавающей кнопки при прокрутке
+	
+	
+	    // Логика появления и исчезновения плавающей кнопки при прокрутке
     let timer = null;
     const mainButton = document.querySelector('button[onclick*="handleCall"]') || document.querySelector('button');
     const floatingBtn = document.getElementById('floatingConsultant');
@@ -100,7 +124,20 @@ function goBack(event) {
     }
 }
 
-function handleCall() {
+// Функция при клике на иконки слева
+function handleCallIcons() {
+    logEvent('[☎✉️]');
+    openCallModalWindow();
+}
+
+// Функция при клике на текст справа
+function handleCallText() {
+    logEvent('[Заказать продукт]');
+    openCallModalWindow();
+}
+
+// Общая логика открытия модального окна (вынесена отдельно, чтобы не дублировать код)
+function openCallModalWindow() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const realPhone = getContact('phone');
 
@@ -130,7 +167,15 @@ function handleCall() {
             copyNotif.classList.add('opacity-100');
         }
     }
+callModalStartTime = Date.now();	
 }
+
+ //для плавающей кнопки сбоку
+function handleCall() {
+    logEvent('[💬]');
+    openCallModalWindow();
+}
+
 
 function hideCopyNotification() {
     const copyNotif = document.getElementById('copyNotification');
@@ -142,16 +187,40 @@ function hideCopyNotification() {
 
 function closeModal() {
     const modal = document.getElementById('callModal');
-    if (modal) modal.classList.add('hidden');
+    if (modal && !modal.classList.contains('hidden')) { 
+        const duration = Math.round((Date.now() - callModalStartTime) / 1000);
+        if (duration >= 9) { // Логируем телефон, только если модалка была открыта от 9 секунд
+            logEvent('timer' + duration);
+        }
+        modal.classList.add('hidden');
+    }
 }
 
 function closeMobileModal() {
     const mobileModal = document.getElementById('mobileCallModal');
-    if (mobileModal) mobileModal.classList.add('hidden');
+    if (mobileModal && !mobileModal.classList.contains('hidden')) { 
+        const duration = Math.round((Date.now() - callModalStartTime) / 1000);
+        if (duration >= 9) { // То же самое для мобильной модалки
+            logEvent('timer' + duration);
+        }
+        mobileModal.classList.add('hidden');
+    }
 }
+
 
 // 4. Безопасные интерактивные QR-коды (защита от XSS)
 function showQR(platformName, qrImageSrc) {
+    // Если пользователь переключился с одного QR-кода на другой, 
+    // сначала фиксируем время просмотра предыдущего
+    if (currentQrPlatform && qrStartTime > 0) {
+        currentQrPlatform = null;
+        qrStartTime = 0;
+    }
+
+    // Запоминаем новый мессенджер и запускаем таймер
+    currentQrPlatform = platformName;
+    qrStartTime = Date.now();
+
     const container = document.getElementById('qrContainer');
     if (!container) return;
 
@@ -175,6 +244,18 @@ function showQR(platformName, qrImageSrc) {
 }
 
 function resetQR() {
+    // Когда мышка ушла с иконки и вернулся логотип
+    if (currentQrPlatform && qrStartTime > 0) {
+        const duration = Math.round((Date.now() - qrStartTime) / 1000);
+        if (duration >= 9) { // Отсекаем случайные микро-наведения меньше секунды
+            logEvent('📷 QR ' + currentQrPlatform );
+        }
+    }
+
+    // Сбрасываем значения таймера
+    currentQrPlatform = null;
+    qrStartTime = 0;
+
     const container = document.getElementById('qrContainer');
     if (container) {
         container.innerHTML = `
@@ -187,7 +268,8 @@ function resetQR() {
 
 // 5. Обработка E-mail по клику
 function handleEmailClick() {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    logEvent('[📧 Email]');
+	const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     const emailAddress = getContact('email');
 
     if (isMobile) {
@@ -249,3 +331,33 @@ window.addEventListener('scroll', function() {
         consultant.style.transform = 'translateY(0px)';
     }
 });
+
+function logEvent(buttonName) {
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxMZR4b8JjQ_T8ACzViz1oSlvqvUUJD4IuB8KvjmRA7nTxIkTHMmlHqsT6I1U0kKX7-ng/exec';
+
+    const page = window.location.pathname.split('/').pop() || 'index.html';
+    const source = document.referrer 
+        ? new URL(document.referrer).hostname 
+        : 'direct';
+
+    let sessionId = sessionStorage.getItem('anon_session');
+    if (!sessionId) {
+        sessionId = Math.random().toString(36).substring(2, 9) + '-' + Date.now();
+        sessionStorage.setItem('anon_session', sessionId);
+    }
+
+    const logData = {
+        session_id: sessionId,
+        source: source,
+        page: page,
+        button: buttonName,
+        time: new Date().toISOString()
+    };
+
+    // Отправляем данные максимально быстро
+    fetch(WEB_APP_URL, {
+        method: 'POST',
+        mode: 'no-cors', 
+        body: JSON.stringify(logData)
+    });
+}

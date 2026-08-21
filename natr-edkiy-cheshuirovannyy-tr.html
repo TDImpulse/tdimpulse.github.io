@@ -97,22 +97,24 @@
                         </div>
                     </div>
 
-		<div class="animated-spotlight-btn shadow-[0_0_25px_rgba(59,130,246,0.5)] mt-8 transition-all duration-300 hover:shadow-[0_0_35px_rgba(59,130,246,0.8)] max-w-full">
-			<div class="inline-flex items-center bg-gray-950 rounded-full overflow-hidden w-full relative">
-				<button onclick="handleCall()" class="w-[43%] py-3.5 bg-gray-950 hover:bg-gray-900 transition-colors duration-300 cursor-pointer absolute left-0 h-full flex items-center justify-end pr-3 sm:pr-6 md:pr-3 z-20">
-					<div class="flex items-center pointer-events-none">
-						<img src="images/Contacts.webp" alt="Контакты" class="contacts-icon h-6 sm:h-5 md:h-7 w-auto flex-shrink-0">
-					</div>
-				</button>
-				<div class="w-[1px] h-5 sm:h-6 bg-gray-700 absolute left-[43%] -translate-x-1/2 pointer-events-none z-30"></div>
-				<button onclick="handleCall()" class="w-[57%] py-3.5 bg-gray-950 hover:bg-gray-900 transition-colors duration-300 cursor-pointer absolute right-0 h-full flex items-center justify-start pl-3 sm:pl-6 md:pl-3 z-20 overflow-hidden">
-					<span class="font-bold text-white text-[17px] sm:text-[14px] md:text-[23px] whitespace-nowrap overflow-hidden text-ellipsis pointer-events-none">Заказать продукт</span>
-				</button>
-				<div class="invisible py-3.5 pointer-events-none w-full">
-					<span class="text-[11px] sm:text-[14px] md:text-[23px] font-bold">Заказать продукт</span>
-				</div>
-			</div>
-		</div>
+<div class="animated-spotlight-btn shadow-[0_0_25px_rgba(59,130,246,0.5)] mt-8 transition-all duration-300 hover:shadow-[0_0_35px_rgba(59,130,246,0.8)] max-w-full">
+    <div class="inline-flex items-center bg-gray-950 rounded-full overflow-hidden w-full relative">
+        <!-- Левая половина с иконками -->
+        <button onclick="handleCallIcons()" class="w-[43%] py-3.5 bg-gray-950 hover:bg-gray-900 transition-colors duration-300 cursor-pointer absolute left-0 h-full flex items-center justify-end pr-3 sm:pr-6 md:pr-3 z-20">
+            <div class="flex items-center pointer-events-none">
+                <img src="images/Contacts.webp" alt="Контакты" class="contacts-icon h-6 sm:h-5 md:h-7 w-auto flex-shrink-0">
+            </div>
+        </button>
+        <div class="w-[1px] h-5 sm:h-6 bg-gray-700 absolute left-[43%] -translate-x-1/2 pointer-events-none z-30"></div>
+        <!-- Правая половина с текстом -->
+        <button onclick="handleCallText()" class="w-[57%] py-3.5 bg-gray-950 hover:bg-gray-900 transition-colors duration-300 cursor-pointer absolute right-0 h-full flex items-center justify-start pl-3 sm:pl-6 md:pl-3 z-20 overflow-hidden">
+            <span class="font-bold text-white text-[17px] sm:text-[14px] md:text-[23px] whitespace-nowrap overflow-hidden text-ellipsis pointer-events-none">Заказать продукт</span>
+        </button>
+        <div class="invisible py-3.5 pointer-events-none w-full">
+            <span class="text-[11px] sm:text-[14px] md:text-[23px] font-bold">Заказать продукт</span>
+        </div>
+    </div>
+</div>
                 </div>
             </div>
         </div>
