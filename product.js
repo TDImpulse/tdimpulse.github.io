@@ -149,6 +149,7 @@ function openCallModalWindow() {
     if (mPhoneEl) {
         mPhoneEl.textContent = realPhone;
         mPhoneEl.href = "tel:" + realPhone;
+		mPhoneEl.addEventListener('click', () => logEvent('[☎️ Звонок с телефона]'));
     }
 
     if (isMobile) {
