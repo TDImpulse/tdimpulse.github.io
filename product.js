@@ -12,6 +12,7 @@ let callModalStartTime = 0; // Переменная для таймера
 let qrStartTime = 0;        // Время начала просмотра QR-кода
 let currentQrPlatform = ''; // Текущая активная платформа QR-кода
 
+
 // 2. Функция мгновенной и точной расшифровки
 function getContact(type) {
     const hex = contactData[type];
@@ -361,3 +362,12 @@ function logEvent(buttonName) {
         body: JSON.stringify(logData)
     });
 }
+
+// =====  ЛОГИРОВАНИЕ КОПИРОВАНИЯ =====
+document.addEventListener('copy', function(event) {
+    const selectedText = window.getSelection().toString().trim();
+    
+    if (selectedText.length > 0 && typeof logEvent === 'function') {
+        logEvent('📋 Скопировано: ' + selectedText);
+    }
+});
