@@ -124,7 +124,7 @@
 
             <!-- Кнопка скачивания готового файла с сервера -->
             <div class="flex justify-start px-1 sm:px-0">
-                <a href="karta_partnera.docx" download class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-full font-medium transition shadow-lg shadow-blue-600/30 cursor-pointer text-center">
+                <a href="karta_partnera.docx" download onclick="logEvent('[📥 карта партнёра]')"class="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-full font-medium transition shadow-lg shadow-blue-600/30 cursor-pointer text-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
@@ -135,5 +135,63 @@
         </div>
     </main>
  <script src="about.js"></script>
+<script>
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxMZR4b8JjQ_T8ACzViz1oSlvqvUUJD4IuB8KvjmRA7nTxIkTHMmlHqsT6I1U0kKX7-ng/exec';
+
+    // Универсальная функция: принимает название кнопки или действия
+    function logEvent(buttonName) {
+        const page = window.location.pathname.split('/').pop() || 'index.html';
+        const source = document.referrer 
+            ? new URL(document.referrer).hostname 
+            : 'direct';
+
+        let sessionId = sessionStorage.getItem('anon_session');
+        if (!sessionId) {
+            sessionId = Math.random().toString(36).substring(2, 9) + '-' + Date.now();
+            sessionStorage.setItem('anon_session', sessionId);
+        }
+
+        const logData = {
+            session_id: sessionId,
+            source: source,
+            page: page,
+            button: buttonName,
+            time: new Date().toISOString()
+        };
+
+        fetch(WEB_APP_URL, {
+            method: 'POST', 
+            mode: 'no-cors', 
+            body: JSON.stringify(logData)
+        });
+    }
+
+    // Автоматический лог при загрузке самой страницы "О компании"
+    document.addEventListener("DOMContentLoaded", () => {
+        logEvent("۰ О компании"); 
+
+        // ЛОВИМ КОПИРОВАНИЕ ТЕКСТА С СЕКРЕТНОЙ ТАБЛИЦЫ РЕКВИЗИТОВ
+const tableWrapper = document.getElementById('contactsTableWrapper');
+        if (tableWrapper) {
+            tableWrapper.name = 'contactsTableWrapper'; // на всякий случай
+            tableWrapper.addEventListener('copy', (event) => {
+                const selectedText = window.getSelection().toString().trim();
+                if (selectedText) {
+                    // Разбиваем скопированный текст на отдельные строки по символу переноса
+                    const lines = selectedText.split(/\r\n|\r|\n/).filter(line => line.trim() !== '');
+                    
+                    let resultText = lines[0].replace(/\s+/g, ' ').trim();
+                    
+                    // Если строк больше одной, добавляем информацию о количестве
+                    if (lines.length > 1) {
+                        resultText += ` ... (+${lines.length - 1} строк)`;
+                    }
+
+                    logEvent(`📋 Скопировано: "${resultText}"`);
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>

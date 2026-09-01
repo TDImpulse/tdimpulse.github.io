@@ -6,7 +6,7 @@
     <title>Торговый дом Импульс | Опт</title>
     <link rel="stylesheet" href="style.css">
 	<script src="https://cdn.tailwindcss.com"></script>
-    <script src="product.js"></script>
+    
 </head>
 <body>
     <!-- Фоновая картинка с фиксированным позиционированием и прозрачностью -->
@@ -269,136 +269,8 @@
 </div>
 
 
-<script>
-// ===== 1. ПОДСТАНОВКА ДАННЫХ ИЗ product.js ПРИ ЗАГРУЗКЕ =====
-document.addEventListener("DOMContentLoaded", function() {
-    // Получаем расшифрованные данные из product.js
-    const salesPhone = getContact('phone');
-    const comDirPhone = getContact('phoneComDir');
-    const emailAddr = getContact('email');
-
-    // Заполняем Отдел продаж
-    const salesEl = document.getElementById('headerSalesPhone');
-    if (salesEl && salesPhone) {
-        salesEl.textContent = salesPhone;
-        salesEl.onclick = function() { handlePhoneClick(salesPhone); };
-    }
-
-    // Заполняем Коммерческого директора
-    const comDirEl = document.getElementById('headerComDirPhone');
-    if (comDirEl && comDirPhone) {
-        comDirEl.textContent = comDirPhone;
-        comDirEl.onclick = function() { handlePhoneClick(comDirPhone); };
-    }
-
-    // Заполняем E-mail
-    const emailEl = document.getElementById('headerEmail');
-    if (emailEl && emailAddr) {
-        emailEl.textContent = emailAddr;
-        emailEl.onclick = function() { handleEmailClick(emailAddr); };
-    }
-});
-
-// ===== 2. ЛОГИКА ВЫПАДАЮЩЕГО МЕНЮ КОНТАКТОВ =====
-const dropdown = document.querySelector('.contacts-dropdown');
-const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-let openTimestamp = 0; 
-
-if (!isMobileDevice && dropdown) {
-    dropdown.addEventListener('mouseenter', function() {
-        if (!this.classList.contains('closed-by-click')) {
-            if (!this.classList.contains('is-open')) {
-                this.classList.add('is-open');
-                openTimestamp = Date.now();
-            }
-        }
-    });
-
-    dropdown.addEventListener('mouseleave', function() {
-        this.classList.remove('is-open');
-        this.classList.remove('closed-by-click');
-        openTimestamp = 0;
-    });
-}
-
-function toggleContactsMenu(event) {
-    event.stopPropagation();
-    if (!dropdown) return;
-
-    if (!isMobileDevice) {
-        if (dropdown.classList.contains('is-open')) {
-            const timePassed = Date.now() - openTimestamp;
-            if (timePassed < 1000) return;
-
-            dropdown.classList.remove('is-open');
-            dropdown.classList.add('closed-by-click');
-            openTimestamp = 0;
-        } else {
-            dropdown.classList.add('is-open');
-            dropdown.classList.remove('closed-by-click');
-            openTimestamp = Date.now();
-        }
-    } else {
-        dropdown.classList.toggle('is-open');
-    }
-}
-
-document.addEventListener('click', function(event) {
-    if (dropdown && !dropdown.contains(event.target)) {
-        dropdown.classList.remove('is-open');
-        dropdown.classList.remove('closed-by-click');
-        openTimestamp = 0;
-    }
-});
-
-// ===== 3. ОБРАБОТКА КЛИКОВ ПО КОНТАКТАМ =====
-function handlePhoneClick(phoneNumber) {
-    if (isMobileDevice) {
-        window.location.href = "tel:" + phoneNumber;
-    } else {
-        const modal = document.getElementById('contactsCallModal');
-        const phoneVal = document.getElementById('modalPhoneValue');
-
-        if (modal && phoneVal) {
-            phoneVal.innerText = phoneNumber;
-            modal.classList.remove('hidden');
-        }
-
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(phoneNumber);
-        }
-    }
-}
-
-function closeContactsModal() {
-    const modal = document.getElementById('contactsCallModal');
-    if (modal) modal.classList.add('hidden');
-}
-
-function handleEmailClick(emailAddress) {
-    if (isMobileDevice) {
-        window.location.href = "mailto:" + emailAddress;
-    } else {
-        const modal = document.getElementById('contactsEmailModal');
-        const emailVal = document.getElementById('modalEmailValue');
-
-        if (modal && emailVal) {
-            emailVal.innerText = emailAddress;
-            modal.classList.remove('hidden');
-        }
-
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(emailAddress);
-        }
-    }
-}
-
-function closeContactsEmailModal() {
-    const modal = document.getElementById('contactsEmailModal');
-    if (modal) modal.classList.add('hidden');
-}
-</script>
-
+<script src="product.js"></script>
+<script src="index.js"></script>
 
 </body>
 </html>
