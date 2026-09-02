@@ -338,9 +338,23 @@ function logEvent(buttonName) {
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbxMZR4b8JjQ_T8ACzViz1oSlvqvUUJD4IuB8KvjmRA7nTxIkTHMmlHqsT6I1U0kKX7-ng/exec';
 
     const page = window.location.pathname.split('/').pop() || 'index.html';
-    const source = document.referrer 
-        ? new URL(document.referrer).hostname 
-        : 'direct';
+    
+    // Проверяем принудительный хвост в URL (?source= или ?utm_source=)
+	const urlParams = new URLSearchParams(window.location.search);
+    let urlSource = urlParams.get('s');
+
+    let source = '';
+    if (urlSource) {
+        // Если метка есть в URL — добавляем звёздочку и сохраняем в сессию
+        source = '*' + urlSource;
+        sessionStorage.setItem('user_forced_source', source);
+    } else {
+        // Иначе проверяем сессию (там уже будет со звёздочкой) или берем реферер
+        source = sessionStorage.getItem('user_forced_source');
+        if (!source) {
+            source = document.referrer ? new URL(document.referrer).hostname : 'direct';
+        }
+    }
 
     let sessionId = sessionStorage.getItem('anon_session');
     if (!sessionId) {

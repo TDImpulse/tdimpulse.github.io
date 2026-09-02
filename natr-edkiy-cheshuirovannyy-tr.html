@@ -39,7 +39,7 @@
     <!-- Изменили обертку на w-full max-w-6xl mx-auto, чтобы контент адаптивно расширялся на экранах разной ширины -->
     <main class="w-full max-w-6xl mx-auto px-2 sm:px-4 md:px-6 pt-2 pb-6">
 	
-        <nav class="mb-4 px-1" aria-label="breadcrumb">
+        <nav class="mb-1 md:mb-3 px-1" aria-label="breadcrumb">
             <ol class="inline-flex items-center space-x-2 text-sm text-gray-400">
                 <li><a href="index.html" class="hover:text-white transition">Главная</a></li>
                 <li><span>/</span></li>
@@ -49,22 +49,28 @@
             </ol>
         </nav>
 	
-        <div class="relative bg-gradient-to-b from-white/10 to-black/30 backdrop-blur-md rounded-2xl md:rounded-3xl border border-white/10 p-4 sm:p-6 md:p-12 shadow-2xl">
-            
-<button onclick="goBack()" class="absolute top-0 left-0 z-25 flex items-center justify-center w-20 h-[60px] rounded-tl-3xl rounded-br-3xl overflow-hidden ring-1 ring-white/30 transition-transform duration-75 hover:scale-105 active:scale-95 focus:outline-none border-r border-b border-white/10" style="box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-    </svg>
-</button>
+		<div class="relative bg-gradient-to-b from-white/10 to-black/30 backdrop-blur-md rounded-2xl md:rounded-3xl border border-white/10 p-4 sm:p-6 md:p-12 shadow-2xl">
+					
+		<button onclick="goBack()" class="absolute top-0 left-0 z-25 flex items-center justify-center w-20 h-[60px] rounded-tl-3xl rounded-br-3xl overflow-hidden ring-1 ring-white/30 transition-transform duration-75 hover:scale-105 active:scale-95 focus:outline-none border-r border-b border-white/10" style="box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.2);">
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+			</svg>
+		</button>
 
+            <!-- Логотип, прижатый к правому верхнему углу карточки -->
+            <div class="absolute top-1 right-0 sm:top-0 sm:right-1 md:top-2 md:right-1 z-1">
+                <a href="index.html" class="inline-block transition-transform hover:scale-110">
+                    <img src="images/logo.webp" alt="Торговый Дом Импульс" class="h-12 sm:h-12 md:h-16 w-auto object-contain opacity-90 hover:opacity-100 drop-shadow-md">
+                </a>
+            </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start mt-6">
-                <div class="bg-white/5 rounded-2xl p-8 flex items-center justify-center border border-white/10">
-                    <img src="images/natr.webp" alt="Натр едкий технический чешуированный ТР" class="w-full max-w-sm object-contain">
-                </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start mt-7">
+				<div class="bg-white/5 lg:rounded-2xl -mx-4 sm:-mx-6 lg:mx-0 mt-3 sm:mt-0 p-6 sm:p-8 flex items-center justify-center border-y lg:border border-white/10">
+					<img src="images/natr.webp" alt="Натр едкий технический чешуированный ТР" class="w-full max-w-sm object-contain">
+				</div>
 
                 <div>
-                    <h1 class="text-lg md:text-3xl font-bold mb-8">Натр едкий технический чешуированный, марка ТР</h1>
+                    <h1 class="text-lg md:text-3xl font-bold mb-8 pr-12 md:pr-16">Натр едкий технический чешуированный, марка ТР</h1>
                     
                     <div class="space-y-4 mb-8">
                         <div class="flex justify-between border-b border-white/10 pb-2">
@@ -102,13 +108,13 @@
         <!-- Левая половина с иконками -->
         <button onclick="handleCallIcons()" class="w-[43%] py-3.5 bg-gray-950 hover:bg-gray-900 transition-colors duration-300 cursor-pointer absolute left-0 h-full flex items-center justify-end pr-3 sm:pr-6 md:pr-3 z-20">
             <div class="flex items-center pointer-events-none">
-                <img src="images/Contacts.webp" alt="Контакты" class="contacts-icon h-6 sm:h-5 md:h-7 w-auto flex-shrink-0">
+                <img src="images/Contacts.webp" alt="Контакты" class="contacts-icon h-6 sm:h-6 md:h-7 w-auto flex-shrink-0">
             </div>
         </button>
         <div class="w-[1px] h-5 sm:h-6 bg-gray-700 absolute left-[43%] -translate-x-1/2 pointer-events-none z-30"></div>
         <!-- Правая половина с текстом -->
         <button onclick="handleCallText()" class="w-[57%] py-3.5 bg-gray-950 hover:bg-gray-900 transition-colors duration-300 cursor-pointer absolute right-0 h-full flex items-center justify-start pl-3 sm:pl-6 md:pl-3 z-20 overflow-hidden">
-            <span class="font-bold text-white text-[17px] sm:text-[14px] md:text-[23px] whitespace-nowrap overflow-hidden text-ellipsis pointer-events-none">Заказать продукт</span>
+            <span class="font-bold text-white text-[17px] sm:text-[20px] md:text-[23px] whitespace-nowrap overflow-hidden text-ellipsis pointer-events-none">Заказать продукт</span>
         </button>
         <div class="invisible py-3.5 pointer-events-none w-full">
             <span class="text-[11px] sm:text-[14px] md:text-[23px] font-bold">Заказать продукт</span>
