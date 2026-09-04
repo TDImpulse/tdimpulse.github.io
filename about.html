@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
+	<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Карта партнёра — Торговый Дом Импульс</title>
-    <!-- Tailwind CSS для стилизации -->
+    <title>Карта партнёра и реквизиты — ООО «ТД Импульс»</title>
+    <meta name="description" content="Официальные реквизиты, ИНН, ОГРН, банковские счета и контакты ООО «Торговый Дом Импульс» — поставщика промышленной химии в Стерлитамаке и РФ.">
+    
+    <!-- Open Graph для соцсетей и мессенджеров -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Карта партнёра и реквизиты — Торговый Дом Импульс">
+    <meta property="og:description" content="Официальные реквизиты, ИНН, ОГРН и банковские счета ООО «ТД Импульс».">
+    <meta property="og:url" content="https://tdimpulse.ru/about.html">
+    <meta property="og:image" content="https://tdimpulse.ru/images/logo.webp">
+    <meta property="og:locale" content="ru_RU">
+	
+	<!-- Tailwind CSS для стилизации -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* Фиксированный фон с прозрачностью */
@@ -193,5 +203,34 @@ const tableWrapper = document.getElementById('contactsTableWrapper');
         }
     });
 </script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ООО «Торговый Дом Импульс»",
+  "alternateName": "ООО «ТД Импульс»",
+  "url": "https://tdimpulse.ru/",
+  "logo": "https://tdimpulse.ru/images/logo.webp",
+  "taxID": "0268075539",
+  "vatID": "026801001",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "ул. Б. Хмельницкого, д. 4, оф. 4",
+    "addressLocality": "Стерлитамак",
+    "addressRegion": "Республика Башкортостан",
+    "postalCode": "453126",
+    "addressCountry": "RU"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "sales",
+    "email": "impulse.chem@gmail.com",
+    "areaServed": "RU",
+    "availableLanguage": "Russian"
+  }
+}
+</script>
+
 </body>
 </html>
