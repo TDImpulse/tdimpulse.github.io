@@ -1,3 +1,5 @@
 User-agent: *
 Disallow: /ox0LUryp6GH9OLaPa34bAPm3o.html
 Allow: /
+
+Sitemap: https://tdimpulse.ru/sitemap.xml
