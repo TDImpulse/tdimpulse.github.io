@@ -21,7 +21,7 @@
         <priority>0.9</priority>
     </url>
 
-    <!-- Товарные позиции (10 штук) -->
+    <!-- Товарные позиции (11 штук) -->
     <url>
         <loc>https://tdimpulse.ru/gipohlorit-natriya-marka-a.html</loc>
         <changefreq>weekly</changefreq>
@@ -71,6 +71,11 @@
         <loc>https://tdimpulse.ru/soda-pishchevaya.html</loc>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
-    </url>
+    </url>	
+	<url>
+    <loc>https://tdimpulse.ru/karbamid-mochevina.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+	</url>
 
 </urlset>
