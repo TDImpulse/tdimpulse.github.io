@@ -12,11 +12,11 @@
     "vatIncluded": false
   },
   "soda-kalcinirovannaya-tehnicheskaya": {
-    "price": "28250",
+    "price": "29000",
     "vatIncluded": false
   },
   "soda-pishchevaya": {
-    "price": "20450",
+    "price": "20000",
     "vatIncluded": false
   },
   "gipohlorit-natriya-marka-a": {
@@ -24,7 +24,7 @@
     "vatIncluded": false
   },
   "natr-edkiy-zhidkiy-RD": {
-    "price": "26350",
+    "price": "27000",
     "vatIncluded": true
   },
   "kaltsiy-chloristiy-tehnicheskiy": {
@@ -36,7 +36,7 @@
     "vatIncluded": true
   },
   "polielektrolit-vpk-402": {
-    "price": "178350",
+    "price": "180200",
     "vatIncluded": true
   },
   "karbamid-mochevina": {
