@@ -1,0 +1,31 @@
+name: Auto Update Test Pages on Prices Change
+
+on:
+  push:
+    paths:
+      - 'prices.json' # Срабатывает ТОЛЬКО при изменении файла prices.json
+
+jobs:
+  update-html:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Разрешение на коммит и пуш обратно в ветку
+
+    steps:
+      - name: Проверка репозитория
+        uses: actions/checkout@v4
+
+      - name: Установка Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Запуск скрипта обновления цен
+        run: node update-prices.js
+
+      - name: Авто-коммит и пуш обновленных HTML-файлов
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add *_TEST.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "auto: обновление цен в тестовых HTML" && git push)
