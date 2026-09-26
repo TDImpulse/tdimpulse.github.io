@@ -339,17 +339,17 @@ function logEvent(buttonName) {
 
     const page = window.location.pathname.split('/').pop() || 'index.html';
     
-    // ��������� �������������� ����� � URL (?source= ��� ?utm_source=)
+    // Проверяем принудительный хвост в URL (?source= или ?utm_source=)
 	const urlParams = new URLSearchParams(window.location.search);
     let urlSource = urlParams.get('s');
 
     let source = '';
     if (urlSource) {
-        // ���� ����� ���� � URL � ��������� �������� � ��������� � ������
+        // Если метка есть в URL — добавляем звёздочку и сохраняем в сессию
         source = '*' + urlSource;
         sessionStorage.setItem('user_forced_source', source);
     } else {
-        // ����� ��������� ������ (��� ��� ����� �� ���������) ��� ����� �������
+        // Иначе проверяем сессию (там уже будет со звёздочкой) или берем реферер
         source = sessionStorage.getItem('user_forced_source');
         if (!source) {
             source = document.referrer ? new URL(document.referrer).hostname : 'direct';
@@ -378,6 +378,64 @@ function logEvent(buttonName) {
     });
 }
 
+
+// --- АВТОНОМНЫЙ ПЕРЕКЛЮЧАТЕЛЬ НДС ---
+let basePrice = null;      // Исходное число из HTML
+let isInitialVAT = null;  // Было ли изначально "с НДС"
+const VAT_RATE = 0.22;    // Ставка НДС 22%
+
+function toggleVAT() {
+    const priceElem = document.getElementById('product-price-val');
+    const badgeElem = document.getElementById('product-vat-badge');
+    const btnElem = document.getElementById('vat-toggle-btn');
+    
+    if (!priceElem || !badgeElem) return;
+
+    // 1. При первом клике считываем реальный текст со страницы
+    if (basePrice === null) {
+        basePrice = parseFloat(priceElem.innerText.replace(/\s+/g, ''));
+        // Проверяем, написано ли "с НДС" в HTML
+        isInitialVAT = badgeElem.innerText.trim().toLowerCase().includes('с нлс') || 
+                       badgeElem.innerText.trim().toLowerCase() === 'с ндс';
+    }
+
+    if (isNaN(basePrice)) return;
+
+    // Считываем ТЕКУЩЕЕ состояние кнопки по тексту
+    const currentText = badgeElem.innerText.trim().toLowerCase();
+    const currentlyHasVAT = currentText === 'с ндс';
+
+    if (currentlyHasVAT) {
+        // --- ПЕРЕКЛЮЧАЕМ НА "БЕЗ НДС" ---
+        let targetPrice;
+        if (isInitialVAT) {
+            // Если изначально было "с НДС", вычитаем 22%
+            targetPrice = Math.round(basePrice / (1 + VAT_RATE));
+        } else {
+            // Если изначально было "без НДС", просто возвращаем базовую цену
+            targetPrice = basePrice;
+        }
+
+        priceElem.innerText = targetPrice.toLocaleString('ru-RU');
+        badgeElem.innerText = 'без НДС';
+
+    } else {
+        // --- ПЕРЕКЛЮЧАЕМ НА "С НДС" ---
+        let targetPrice;
+        if (isInitialVAT) {
+            // Если изначально было "с НДС", возвращаем точную базовую цену
+            targetPrice = basePrice;
+        } else {
+            // Если изначально было "без НДС", начисляем 22%
+            targetPrice = Math.round(basePrice * (1 + VAT_RATE));
+        }
+
+        priceElem.innerText = targetPrice.toLocaleString('ru-RU');
+        badgeElem.innerText = 'с НДС';      
+
+    }
+}
+
 // =====  ЛОГИРОВАНИЕ КОПИРОВАНИЯ =====
 document.addEventListener('copy', function(event) {
     const selectedText = window.getSelection().toString().trim();
@@ -385,4 +443,7 @@ document.addEventListener('copy', function(event) {
     if (selectedText.length > 0 && typeof logEvent === 'function') {
         logEvent('📋 Скопировано: ' + selectedText);
     }
-});
+}
+
+
+);
