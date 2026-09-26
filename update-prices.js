@@ -29,22 +29,26 @@ TARGET_FILES.forEach(filename => {
   let html = fs.readFileSync(filePath, 'utf8');
   let modified = false;
 
-  // Получаем ключ товара (например, "natr-edkiy-zhidkiy-RD.html")
-  const productKey = filename.replace('_TEST.html', '.html');
-  const itemData = pricesData[productKey] || pricesData[filename];
+  // Очищаем имя файла до чистого slug (например: polielektrolit-vpk-402)
+  const cleanKey = filename.replace('_TEST.html', '').replace('.html', '');
+  
+  // Ищем совпадение по любому из возможных вариантов ключа
+  const itemData = pricesData[cleanKey] || pricesData[`${cleanKey}.html`] || pricesData[filename];
 
   if (!itemData) {
-    console.warn(`Нет данных в prices.json для ${filename}`);
+    console.warn(`Нет данных в prices.json для ключа: ${cleanKey}`);
     return;
   }
 
-  const newPrice = itemData.price || itemData.withVAT || "26 000";
-  const numericPrice = String(newPrice).replace(/\s+/g, '');
+  // Красиво форматируем цену с пробелами для HTML (например: 178 350)
+  const rawPrice = itemData.price || itemData.withVAT || "26000";
+  const numericPrice = String(rawPrice).replace(/\s+/g, '');
+  const formattedPrice = numericPrice.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
   // 1. Обновляем цену в неоновом HTML-блоке
   const priceValRegex = /(<span id="product-price-val"[^>]*>)(.*?)(<\/span>)/i;
   if (priceValRegex.test(html)) {
-    html = html.replace(priceValRegex, `$1${newPrice}$3`);
+    html = html.replace(priceValRegex, `$1${formattedPrice}$3`);
     modified = true;
   }
 
@@ -57,6 +61,6 @@ TARGET_FILES.forEach(filename => {
 
   if (modified) {
     fs.writeFileSync(filePath, html, 'utf8');
-    console.log(`Успешно обновлен: ${filename}`);
+    console.log(`Успешно обновлен: ${filename} -> новая цена: ${formattedPrice}`);
   }
 });
