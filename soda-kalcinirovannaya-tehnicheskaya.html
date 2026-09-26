@@ -74,7 +74,8 @@
                 <div>
                     <h1 class="text-lg md:text-3xl font-bold mb-8 pr-12 md:pr-16">Сода кальцинированная техническая, ГОСТ 5100-85</h1>
                     
-                    <div class="space-y-4 mb-8">
+                    <div class="space-y-3 mb-6 text-xs sm:text-sm">
+
                         <div class="flex justify-between border-b border-white/10 pb-2">
                             <span class="text-gray-400">Нормативный документ</span>
                             <span class="font-semibold text-white">ГОСТ 5100-85</span>
@@ -104,6 +105,35 @@
                             <span class="font-semibold text-white">Мешки до 50 кг / МКР (1 т)</span>
                         </div>
                     </div>
+
+<!-- АДАПТИВНЫЙ НЕОНОВЫЙ БЛОК ЦЕНЫ -->
+<div class="mb-6 px-3.5 sm:px-6 py-3 rounded-2xl bg-slate-950/80 border-x-2 border-y border-x-blue-500 border-y-blue-500/20 flex items-center justify-between backdrop-blur-md shadow-[0_0_15px_rgba(59,130,246,0.25)] relative">
+    
+    <!-- Неоновые блики -->
+    <div class="absolute -left-1 top-1/2 -translate-y-1/2 w-3 h-3/4 bg-blue-500/30 blur-md pointer-events-none"></div>
+    <div class="absolute -right-1 top-1/2 -translate-y-1/2 w-3 h-3/4 bg-blue-500/30 blur-md pointer-events-none"></div>
+
+    <!-- Градиент фона -->
+    <div class="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-600/10 via-transparent to-blue-600/10 pointer-events-none"></div>
+
+    <!-- Цена -->
+    <div class="relative z-10">
+        <div class="text-[12px] sm:text-xs text-blue-300 font-semibold tracking-wider uppercase">Оптовая цена</div>
+        <div class="flex items-baseline gap-1.5 sm:gap-2 mt-0.5 whitespace-nowrap">
+            <span class="text-white font-semibold text-xs sm:text-base">от</span>
+            <span id="product-price-val" class="text-2xl sm:text-3xl font-extrabold text-white font-mono tracking-tight">26 000</span>
+            <span class="text-white font-semibold text-xs sm:text-sm">руб/т</span>
+        </div>
+    </div>
+    
+    <!-- Кнопка-переключатель НДС -->
+    <button type="button" 
+            id="vat-toggle-btn"
+            onclick="toggleVAT()"
+            class="relative z-10 px-2.5 sm:px-6 py-1 rounded-full text-xs sm:text-sm font-semibold bg-blue-700/20 hover:bg-blue-500/30 text-white border border-blue-400/50 shadow-[0_0_10px_rgba(59,130,246,0.3)] transition-all cursor-pointer active:scale-95 select-none shrink-0 ml-2">
+        <span id="product-vat-badge">с НДС</span>
+    </button>
+</div>
 
 <div class="animated-spotlight-btn shadow-[0_0_25px_rgba(59,130,246,0.5)] mt-8 transition-all duration-300 hover:shadow-[0_0_35px_rgba(59,130,246,0.8)] max-w-full">
     <div class="inline-flex items-center bg-gray-950 rounded-full overflow-hidden w-full relative">
@@ -347,6 +377,15 @@
         "@type": "Organization",
         "name": "Торговый дом Импульс"
       },
+      "offers": {
+		  "@type": "Offer",
+		  "price": "26000",
+		  "priceCurrency": "RUB",
+		  "valueAddedTaxIncluded": true,
+		  "availability": "https://schema.org/InStock",
+		  "url": "https://tdimpulse.ru/soda-kalcinirovannaya-tehnicheskaya.html",
+		  "priceValidUntil": "2026-09-30"
+		},
       "additionalProperty": [
         {
           "@type": "PropertyValue",
