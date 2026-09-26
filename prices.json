@@ -1,46 +1,68 @@
 {
   "natr-edkiy-cheshuirovannyy-tr": {
-    "price": "62000",
-    "vatIncluded": true
+    "url": "natr-edkiy-cheshuirovannyy-tr.html",
+    "price": "58000",
+    "vatIncluded": false,
+    "vatLabel": "без НДС"
   },
   "kislota-solyanaya-sinteticheskaya": {
-    "price": "18500",
-    "vatIncluded": true
+    "url": "kislota-solyanaya-sinteticheskaya.html",
+    "price": "19000",
+    "vatIncluded": false,
+    "vatLabel": "без НДС"
   },
   "kislota-sernaya-tehnicheskaya": {
+    "url": "kislota-sernaya-tehnicheskaya.html",
     "price": "14200",
-    "vatIncluded": true
+    "vatIncluded": false,
+    "vatLabel": "без НДС"
   },
   "soda-kalcinirovannaya-tehnicheskaya": {
+    "url": "soda-kalcinirovannaya-tehnicheskaya.html",
     "price": "28500",
-    "vatIncluded": false
+    "vatIncluded": false,
+    "vatLabel": "без НДС"
   },
   "soda-pishchevaya": {
-    "price": "34000",
-    "vatIncluded": true
+    "url": "soda-pishchevaya.html",
+    "price": "20000",
+    "vatIncluded": false,
+    "vatLabel": "без НДС"
   },
   "gipohlorit-natriya-marka-a": {
+    "url": "gipohlorit-natriya-marka-a.html",
     "price": "21000",
-    "vatIncluded": false
+    "vatIncluded": false,
+    "vatLabel": "без НДС"
   },
   "natr-edkiy-zhidkiy-RD": {
+    "url": "natr-edkiy-zhidkiy-RD.html",
     "price": "26000",
-    "vatIncluded": true
+    "vatIncluded": true,
+    "vatLabel": "с НДС"
   },
   "kaltsiy-chloristiy-tehnicheskiy": {
+    "url": "kaltsiy-chloristiy-tehnicheskiy.html",
     "price": "29000",
-    "vatIncluded": true
+    "vatIncluded": true,
+    "vatLabel": "с НДС"
   },
   "hlorparafin-hp-470": {
+    "url": "hlorparafin-hp-470.html",
     "price": "95000",
-    "vatIncluded": true
+    "vatIncluded": true,
+    "vatLabel": "с НДС"
   },
   "polielektrolit-vpk-402": {
+    "url": "polielektrolit-vpk-402.html",
     "price": "180000",
-    "vatIncluded": true
+    "vatIncluded": true,
+    "vatLabel": "с НДС"
   },
   "karbamid-mochevina": {
-    "price": "38000",
-    "vatIncluded": false
+    "url": "karbamid-mochevina.html",
+    "price": "39500",
+    "vatIncluded": false,
+    "vatLabel": "без НДС"
   }
 }
