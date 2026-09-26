@@ -29,10 +29,10 @@ TARGET_FILES.forEach(filename => {
   let html = fs.readFileSync(filePath, 'utf8');
   let modified = false;
 
-  // Очищаем имя файла до чистого slug (например: polielektrolit-vpk-402)
+  // Очищаем имя файла до чистого slug (например: soda-pishchevaya)
   const cleanKey = filename.replace('_TEST.html', '').replace('.html', '');
   
-  // Ищем совпадение по любому из возможных вариантов ключа
+  // Ищем данные по ключу
   const itemData = pricesData[cleanKey] || pricesData[`${cleanKey}.html`] || pricesData[filename];
 
   if (!itemData) {
@@ -40,27 +40,52 @@ TARGET_FILES.forEach(filename => {
     return;
   }
 
-  // Красиво форматируем цену с пробелами для HTML (например: 178 350)
-  const rawPrice = itemData.price || itemData.withVAT || "26000";
+  // 1. Форматируем и обновляем ЦЕНУ
+  const rawPrice = itemData.price || itemData.withVAT || "20450";
   const numericPrice = String(rawPrice).replace(/\s+/g, '');
   const formattedPrice = numericPrice.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
-  // 1. Обновляем цену в неоновом HTML-блоке
+  // Обновление цены в визуальном блоке
   const priceValRegex = /(<span id="product-price-val"[^>]*>)(.*?)(<\/span>)/i;
   if (priceValRegex.test(html)) {
     html = html.replace(priceValRegex, `$1${formattedPrice}$3`);
     modified = true;
   }
 
-  // 2. Обновляем цену в Schema.org (offers -> price)
+  // Обновление цены в Schema.org
   const schemaPriceRegex = /("price":\s*")[^"]*(")/i;
   if (schemaPriceRegex.test(html)) {
     html = html.replace(schemaPriceRegex, `$1${numericPrice}$2`);
     modified = true;
   }
 
+  // 2. Обновляем статус НДС (vatIncluded: true/false)
+  if (typeof itemData.vatIncluded !== 'undefined') {
+    const isVatIncluded = Boolean(itemData.vatIncluded);
+    const vatText = isVatIncluded ? 'с НДС' : 'без НДС';
+
+    // Обновляем текст на неоновой плашке (кнопке)
+    const vatBadgeRegex = /(<div[^>]*id="product-vat-badge"[^>]*>)(.*?)(<\/div>)/i;
+    const vatBadgeAltRegex = /(<span[^>]*id="product-vat-badge"[^>]*>)(.*?)(<\/span>)/i;
+
+    if (vatBadgeRegex.test(html)) {
+      html = html.replace(vatBadgeRegex, `$1${vatText}$3`);
+      modified = true;
+    } else if (vatBadgeAltRegex.test(html)) {
+      html = html.replace(vatBadgeAltRegex, `$1${vatText}$3`);
+      modified = true;
+    }
+
+    // Обновляем Schema.org ("valueAddedTaxIncluded": true/false)
+    const schemaVatRegex = /("valueAddedTaxIncluded":\s*)(true|false)/i;
+    if (schemaVatRegex.test(html)) {
+      html = html.replace(schemaVatRegex, `$1${isVatIncluded}`);
+      modified = true;
+    }
+  }
+
   if (modified) {
     fs.writeFileSync(filePath, html, 'utf8');
-    console.log(`Успешно обновлен: ${filename} -> новая цена: ${formattedPrice}`);
+    console.log(`Успешно обновлен: ${filename} -> цена: ${formattedPrice}, НДС: ${itemData.vatIncluded}`);
   }
 });
