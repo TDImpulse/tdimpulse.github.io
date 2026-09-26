@@ -1,46 +1,46 @@
 {
   "natr-edkiy-cheshuirovannyy-tr": {
-    "price": "59200",
+    "price": "46000",
     "vatIncluded": false
   },
   "kislota-solyanaya-sinteticheskaya": {
-    "price": "18200",
+    "price": "19200",
     "vatIncluded": false
   },
   "kislota-sernaya-tehnicheskaya": {
-    "price": "14200",
+    "price": "23500",
     "vatIncluded": false
   },
   "soda-kalcinirovannaya-tehnicheskaya": {
-    "price": "29000",
+    "price": "33500",
     "vatIncluded": false
   },
   "soda-pishchevaya": {
-    "price": "20000",
+    "price": "32500",
     "vatIncluded": false
   },
   "gipohlorit-natriya-marka-a": {
-    "price": "21000",
+    "price": "24000",
     "vatIncluded": false
   },
   "natr-edkiy-zhidkiy-RD": {
-    "price": "27000",
-    "vatIncluded": true
+    "price": "61000",
+    "vatIncluded": false
   },
   "kaltsiy-chloristiy-tehnicheskiy": {
-    "price": "29000",
-    "vatIncluded": true
+    "price": "23000",
+    "vatIncluded": false
   },
   "hlorparafin-hp-470": {
-    "price": "95000",
-    "vatIncluded": true
+    "price": "83000",
+    "vatIncluded": false
   },
   "polielektrolit-vpk-402": {
-    "price": "180200",
-    "vatIncluded": true
+    "price": "195000",
+    "vatIncluded": false
   },
   "karbamid-mochevina": {
-    "price": "39500",
-    "vatIncluded": false
+    "price": "35000",
+    "vatIncluded": true
   }
 }
