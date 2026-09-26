@@ -1,19 +1,19 @@
 {
   "natr-edkiy-cheshuirovannyy-tr": {
     "url": "natr-edkiy-cheshuirovannyy-tr.html",
-    "price": "59500",
+    "price": "59100",
     "vatIncluded": false,
     "vatLabel": "без НДС"
   },
   "kislota-solyanaya-sinteticheskaya": {
     "url": "kislota-solyanaya-sinteticheskaya.html",
-    "price": "18500",
+    "price": "18100",
     "vatIncluded": false,
     "vatLabel": "без НДС"
   },
   "kislota-sernaya-tehnicheskaya": {
     "url": "kislota-sernaya-tehnicheskaya.html",
-    "price": "14500",
+    "price": "14100",
     "vatIncluded": false,
     "vatLabel": "без НДС"
   },
