@@ -380,39 +380,39 @@ function logEvent(buttonName) {
 
 
 // --- АВТОНОМНЫЙ ПЕРЕКЛЮЧАТЕЛЬ НДС ---
-let basePrice = null;      // Исходное число из HTML
-let isInitialVAT = null;  // Было ли изначально "с НДС"
-const VAT_RATE = 0.22;    // Ставка НДС 22%
+let basePrice = null;
+let isInitialVAT = true;
+const VAT_RATE = 0.22; // Обычная ставка НДС 22% (измени на 0.22, если требуется 22%)
 
 function toggleVAT() {
     const priceElem = document.getElementById('product-price-val');
     const badgeElem = document.getElementById('product-vat-badge');
-    const btnElem = document.getElementById('vat-toggle-btn');
     
     if (!priceElem || !badgeElem) return;
 
-    // 1. При первом клике считываем реальный текст со страницы
+    const currentText = badgeElem.innerText.trim().toLowerCase();
+
+    // 1. При первом клике фиксируем базвую цену со страницы
     if (basePrice === null) {
-        basePrice = parseFloat(priceElem.innerText.replace(/\s+/g, ''));
-        // Проверяем, написано ли "с НДС" в HTML
-        isInitialVAT = badgeElem.innerText.trim().toLowerCase().includes('с нлс') || 
-                       badgeElem.innerText.trim().toLowerCase() === 'с ндс';
+        // Убираем неразрывные и обычные пробелы
+        const rawText = priceElem.innerText.replace(/\s+|\u00A0/g, '');
+        basePrice = parseFloat(rawText);
+        
+        // Исправлена опечатка 'с нлс' -> 'с ндс'
+        isInitialVAT = currentText.includes('с ндс');
     }
 
     if (isNaN(basePrice)) return;
 
-    // Считываем ТЕКУЩЕЕ состояние кнопки по тексту
-    const currentText = badgeElem.innerText.trim().toLowerCase();
     const currentlyHasVAT = currentText === 'с ндс';
 
     if (currentlyHasVAT) {
         // --- ПЕРЕКЛЮЧАЕМ НА "БЕЗ НДС" ---
         let targetPrice;
         if (isInitialVAT) {
-            // Если изначально было "с НДС", вычитаем 22%
+            // Если исходная цена была с НДС, делим на (1 + VAT_RATE)
             targetPrice = Math.round(basePrice / (1 + VAT_RATE));
         } else {
-            // Если изначально было "без НДС", просто возвращаем базовую цену
             targetPrice = basePrice;
         }
 
@@ -423,16 +423,14 @@ function toggleVAT() {
         // --- ПЕРЕКЛЮЧАЕМ НА "С НДС" ---
         let targetPrice;
         if (isInitialVAT) {
-            // Если изначально было "с НДС", возвращаем точную базовую цену
             targetPrice = basePrice;
         } else {
-            // Если изначально было "без НДС", начисляем 22%
+            // Если исходная цена была без НДС, умножаем на (1 + VAT_RATE)
             targetPrice = Math.round(basePrice * (1 + VAT_RATE));
         }
 
         priceElem.innerText = targetPrice.toLocaleString('ru-RU');
-        badgeElem.innerText = 'с НДС';      
-
+        badgeElem.innerText = 'с НДС';     
     }
 }
 
