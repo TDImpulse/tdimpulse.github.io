@@ -1,68 +1,46 @@
 {
   "natr-edkiy-cheshuirovannyy-tr": {
-    "url": "natr-edkiy-cheshuirovannyy-tr.html",
-    "price": "59100",
-    "vatIncluded": false,
-    "vatLabel": "без НДС"
+    "price": "59200",
+    "vatIncluded": false
   },
   "kislota-solyanaya-sinteticheskaya": {
-    "url": "kislota-solyanaya-sinteticheskaya.html",
-    "price": "18100",
-    "vatIncluded": false,
-    "vatLabel": "без НДС"
+    "price": "18200",
+    "vatIncluded": false
   },
   "kislota-sernaya-tehnicheskaya": {
-    "url": "kislota-sernaya-tehnicheskaya.html",
-    "price": "14100",
-    "vatIncluded": false,
-    "vatLabel": "без НДС"
+    "price": "14200",
+    "vatIncluded": false
   },
   "soda-kalcinirovannaya-tehnicheskaya": {
-    "url": "soda-kalcinirovannaya-tehnicheskaya.html",
     "price": "28500",
-    "vatIncluded": false,
-    "vatLabel": "без НДС"
+    "vatIncluded": false
   },
   "soda-pishchevaya": {
-    "url": "soda-pishchevaya.html",
     "price": "20000",
-    "vatIncluded": false,
-    "vatLabel": "без НДС"
+    "vatIncluded": false
   },
   "gipohlorit-natriya-marka-a": {
-    "url": "gipohlorit-natriya-marka-a.html",
     "price": "21000",
-    "vatIncluded": false,
-    "vatLabel": "без НДС"
+    "vatIncluded": false
   },
   "natr-edkiy-zhidkiy-RD": {
-    "url": "natr-edkiy-zhidkiy-RD.html",
     "price": "26000",
-    "vatIncluded": true,
-    "vatLabel": "с НДС"
+    "vatIncluded": true
   },
   "kaltsiy-chloristiy-tehnicheskiy": {
-    "url": "kaltsiy-chloristiy-tehnicheskiy.html",
     "price": "29000",
-    "vatIncluded": true,
-    "vatLabel": "с НДС"
+    "vatIncluded": true
   },
   "hlorparafin-hp-470": {
-    "url": "hlorparafin-hp-470.html",
     "price": "95000",
-    "vatIncluded": true,
-    "vatLabel": "с НДС"
+    "vatIncluded": true
   },
   "polielektrolit-vpk-402": {
-    "url": "polielektrolit-vpk-402.html",
     "price": "180000",
-    "vatIncluded": true,
-    "vatLabel": "с НДС"
+    "vatIncluded": true
   },
   "karbamid-mochevina": {
-    "url": "karbamid-mochevina.html",
     "price": "39500",
-    "vatIncluded": false,
-    "vatLabel": "без НДС"
+    "vatIncluded": false
   }
 }
