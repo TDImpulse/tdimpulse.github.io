@@ -11,11 +11,9 @@ if (!fs.existsSync(PRICES_FILE)) {
 const rawData = fs.readFileSync(PRICES_FILE, 'utf8');
 const pricesData = JSON.parse(rawData);
 
-// Получаем список файлов прямо из ключей JSON
 const targetKeys = Object.keys(pricesData);
 
 targetKeys.forEach(key => {
-  // Формируем имя рабочей страницы: например "soda-pishchevaya.html"
   const cleanKey = key.replace('.html', '');
   const filename = `${cleanKey}.html`;
   const filePath = path.join(__dirname, filename);
@@ -30,50 +28,83 @@ targetKeys.forEach(key => {
 
   const itemData = pricesData[key];
 
-  // 1. Форматируем и обновляем ЦЕНУ
-  const rawPrice = itemData.price || itemData.withVAT || "20450";
-  const numericPrice = String(rawPrice).replace(/\s+/g, '');
-  const formattedPrice = numericPrice.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  // Извлекаем цену
+  const rawPrice = itemData.price !== undefined ? itemData.price : (itemData.withVAT || "0");
+  const numericPriceVal = parseFloat(String(rawPrice).replace(/\s+/g, '')) || 0;
 
-  // Визуальный блок цены
-  const priceValRegex = /(<span id="product-price-val"[^>]*>)(.*?)(<\/span>)/i;
-  if (priceValRegex.test(html)) {
-    html = html.replace(priceValRegex, `$1${formattedPrice}$3`);
+  // --- 1. ОБРАБОТКА ДВУХ РЕЖИМОВ (ДОГОВОРНАЯ / ЦЕНА В ЦИФРАХ) ---
+
+  if (numericPriceVal === 0) {
+    // === РЕЖИМ: ДОГОВОРНАЯ ЦЕНА ===
+    
+    // 1. Очищаем префикс "от"
+    html = html.replace(/(<span[^>]*id="product-price-prefix"[^>]*>)(.*?)(<\/span>)/i, '$1$3');
+
+    // 2. Ставим слово "договорная" и меняем шрифт на semibold (как у "ОПТОВАЯ ЦЕНА")
+    const priceValRegex = /(<span[^>]*id="product-price-val"[^>]*class=")[^"]*("[^>]*>)(.*?)(<\/span>)/i;
+    if (priceValRegex.test(html)) {
+      html = html.replace(
+        priceValRegex,
+        `$1text-2xl sm:text-3xl font-semibold text-white tracking-tight$2договорная$4`
+      );
+    }
+
+    // 3. Очищаем суффикс "руб/т"
+    html = html.replace(/(<span[^>]*id="product-price-suffix"[^>]*>)(.*?)(<\/span>)/i, '$1$3');
+
+    // 4. Скрываем кнопку НДС
+    if (html.includes('id="vat-toggle-btn"')) {
+      html = html.replace(/id="vat-toggle-btn"(\s+style="[^"]*")?/i, 'id="vat-toggle-btn" style="display: none !important;"');
+    }
+
+    modified = true;
+
+  } else {
+    // === РЕЖИМ: ОБЫЧНАЯ ЦЕНА (> 0) ===
+    
+    const formattedPrice = String(numericPriceVal).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+
+    // 1. Возвращаем префикс "от"
+    html = html.replace(/(<span[^>]*id="product-price-prefix"[^>]*>)(.*?)(<\/span>)/i, '$1от$3');
+
+    // 2. Вставляем число и возвращаем оригинальные шрифты (font-extrabold font-mono)
+    const priceValRegex = /(<span[^>]*id="product-price-val"[^>]*class=")[^"]*("[^>]*>)(.*?)(<\/span>)/i;
+    if (priceValRegex.test(html)) {
+      html = html.replace(
+        priceValRegex,
+        `$1text-2xl sm:text-3xl font-extrabold text-white font-mono tracking-tight$2${formattedPrice}$4`
+      );
+    }
+
+    // 3. Возвращаем суффикс "руб/т"
+    html = html.replace(/(<span[^>]*id="product-price-suffix"[^>]*>)(.*?)(<\/span>)/i, '$1руб/т$3');
+
+    // 4. Показываем кнопку НДС
+    html = html.replace(/id="vat-toggle-btn"\s+style="display:\s*none\s*!important;"/gi, 'id="vat-toggle-btn"');
+
+    // 5. Обновляем статус НДС (с НДС / без НДС)
+    if (typeof itemData.vatIncluded !== 'undefined') {
+      const vatText = Boolean(itemData.vatIncluded) ? 'с НДС' : 'без НДС';
+      const vatBadgeRegex = /(<span[^>]*id="product-vat-badge"[^>]*>)(.*?)(<\/span>)/i;
+      if (vatBadgeRegex.test(html)) {
+        html = html.replace(vatBadgeRegex, `$1${vatText}$3`);
+      }
+    }
+
     modified = true;
   }
 
-  // Schema.org цена
-  const schemaPriceRegex = /("price":\s*")[^"]*(")/i;
-  if (schemaPriceRegex.test(html)) {
-    html = html.replace(schemaPriceRegex, `$1${numericPrice}$2`);
-    modified = true;
-  }
+  // --- 2. ОБНОВЛЕНИЕ МИКРОРАЗМЕТКИ SCHEMA.ORG ---
+  const priceForSchema = numericPriceVal === 0 ? "0" : String(numericPriceVal);
+  html = html.replace(/("price":\s*")[^"]*(")/gi, `$1${priceForSchema}$2`);
 
-  // 2. Обновляем статус НДС
   if (typeof itemData.vatIncluded !== 'undefined') {
     const isVatIncluded = Boolean(itemData.vatIncluded);
-    const vatText = isVatIncluded ? 'с НДС' : 'без НДС';
-
-    const vatBadgeRegex = /(<div[^>]*id="product-vat-badge"[^>]*>)(.*?)(<\/div>)/i;
-    const vatBadgeAltRegex = /(<span[^>]*id="product-vat-badge"[^>]*>)(.*?)(<\/span>)/i;
-
-    if (vatBadgeRegex.test(html)) {
-      html = html.replace(vatBadgeRegex, `$1${vatText}$3`);
-      modified = true;
-    } else if (vatBadgeAltRegex.test(html)) {
-      html = html.replace(vatBadgeAltRegex, `$1${vatText}$3`);
-      modified = true;
-    }
-
-    const schemaVatRegex = /("valueAddedTaxIncluded":\s*)(true|false)/i;
-    if (schemaVatRegex.test(html)) {
-      html = html.replace(schemaVatRegex, `$1${isVatIncluded}`);
-      modified = true;
-    }
+    html = html.replace(/("valueAddedTaxIncluded":\s*)(true|false)/gi, `$1${isVatIncluded}`);
   }
 
   if (modified) {
     fs.writeFileSync(filePath, html, 'utf8');
-    console.log(`Успешно обновлен файл: ${filename} -> цена: ${formattedPrice}, НДС: ${itemData.vatIncluded}`);
+    console.log(`Обновлен: ${filename} -> ${numericPriceVal === 0 ? 'договорная' : formattedPrice + ' руб/т'}`);
   }
 });

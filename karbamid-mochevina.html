@@ -119,10 +119,10 @@
     <!-- Цена -->
     <div class="relative z-10">
         <div class="text-[12px] sm:text-xs text-blue-300 font-semibold tracking-wider uppercase">Оптовая цена</div>
-        <div class="flex items-baseline gap-1.5 sm:gap-2 mt-0.5 whitespace-nowrap">
-            <span class="text-white font-semibold text-xs sm:text-base">от</span>
-            <span id="product-price-val" class="text-2xl sm:text-3xl font-extrabold text-white font-mono tracking-tight">35 400</span>
-            <span class="text-white font-semibold text-xs sm:text-sm">руб/т</span>
+        <div id="product-price-block" class="flex items-baseline gap-1.5 sm:gap-2 mt-0.5 whitespace-nowrap">
+            <span id="product-price-prefix" class="text-white font-semibold text-xs sm:text-base">от</span>
+            <span id="product-price-val" class="text-2xl sm:text-3xl font-extrabold text-white font-mono tracking-tight">26 000</span>
+            <span id="product-price-suffix" class="text-white font-semibold text-xs sm:text-sm">руб/т</span>
         </div>
     </div>
     
@@ -464,15 +464,20 @@
         "@type": "Brand",
         "name": "Торговый дом Импульс"
       },
-      "offers": {
-		  "@type": "Offer",
-		  "price": "35400",
-		  "priceCurrency": "RUB",
-		  "valueAddedTaxIncluded": true,
-		  "availability": "https://schema.org/InStock",
-		  "url": "https://tdimpulse.ru/karbamid-mochevina.html",
-		  "priceValidUntil": "2026-09-30"
-		},
+  "offers": {
+  "@type": "Offer",
+  "price": "26000",
+  "priceCurrency": "RUB",
+  "availability": "https://schema.org/InStock",
+  "url": "https://tdimpulse.ru/karbamid-mochevina.html",
+  "priceValidUntil": "2026-09-30",
+  "priceSpecification": {
+    "@type": "PriceSpecification",
+    "price": "26000",
+    "priceCurrency": "RUB",
+    "valueAddedTaxIncluded": true
+  }
+},
       "additionalProperty": [
         {"@type":"PropertyValue","name":"Нормативный документ","value":"ГОСТ 2081-2010"},
         {"@type":"PropertyValue","name":"Марки","value":"А и Б"},
