@@ -32,6 +32,8 @@ targetKeys.forEach(key => {
   const rawPrice = itemData.price !== undefined ? itemData.price : (itemData.withVAT || "0");
   const numericPriceVal = parseFloat(String(rawPrice).replace(/\s+/g, '')) || 0;
 
+  let formattedPrice = '';
+
   // --- 1. ОБРАБОТКА ДВУХ РЕЖИМОВ (ДОГОВОРНАЯ / ЦЕНА В ЦИФРАХ) ---
 
   if (numericPriceVal === 0) {
@@ -62,7 +64,7 @@ targetKeys.forEach(key => {
   } else {
     // === РЕЖИМ: ОБЫЧНАЯ ЦЕНА (> 0) ===
     
-    const formattedPrice = String(numericPriceVal).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    formattedPrice = String(numericPriceVal).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 
     // 1. Возвращаем префикс "от"
     html = html.replace(/(<span[^>]*id="product-price-prefix"[^>]*>)(.*?)(<\/span>)/i, '$1от$3');
