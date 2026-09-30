@@ -1,6 +1,6 @@
 {
   "natr-edkiy-cheshuirovannyy-tr": {
-    "price": "46000",
+    "price": "50000",
     "vatIncluded": false
   },
   "kislota-solyanaya-sinteticheskaya": {
@@ -12,8 +12,8 @@
     "vatIncluded": false
   },
   "soda-kalcinirovannaya-tehnicheskaya": {
-    "price": "33500",
-    "vatIncluded": false
+    "price": "42000",
+    "vatIncluded": true
   },
   "soda-pishchevaya": {
     "price": "32500",
@@ -28,7 +28,7 @@
     "vatIncluded": false
   },
   "kaltsiy-chloristiy-tehnicheskiy": {
-    "price": "23000",
+    "price": "0",
     "vatIncluded": false
   },
   "hlorparafin-hp-470": {
