@@ -1,30 +1,30 @@
 {
   "natr-edkiy-cheshuirovannyy-tr": {
-    "price": "50000",
+    "price": "0",
     "vatIncluded": false
   },
   "kislota-solyanaya-sinteticheskaya": {
-    "price": "19200",
+    "price": "0",
     "vatIncluded": false
   },
   "kislota-sernaya-tehnicheskaya": {
-    "price": "33000",
+    "price": "0",
     "vatIncluded": false
   },
   "soda-kalcinirovannaya-tehnicheskaya": {
-    "price": "42000",
+    "price": "0",
     "vatIncluded": true
   },
   "soda-pishchevaya": {
-    "price": "32500",
+    "price": "0",
     "vatIncluded": false
   },
   "gipohlorit-natriya-marka-a": {
-    "price": "24000",
+    "price": "0",
     "vatIncluded": false
   },
   "natr-edkiy-zhidkiy-RD": {
-    "price": "61500",
+    "price": "0",
     "vatIncluded": false
   },
   "kaltsiy-chloristiy-tehnicheskiy": {
@@ -32,7 +32,7 @@
     "vatIncluded": false
   },
   "hlorparafin-hp-470": {
-    "price": "83000",
+    "price": "0",
     "vatIncluded": false
   },
   "polielektrolit-vpk-402": {
